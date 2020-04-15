@@ -1,5 +1,5 @@
 ---
-title: post1
+title: Construct Your New Blog
 date: 2020-04-15 21:22:00
 categories:
   - website
