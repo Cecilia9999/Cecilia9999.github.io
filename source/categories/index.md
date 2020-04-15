@@ -1,6 +1,5 @@
 ---
 title: categories
-date: 2020-04-15 19:10:09
+date: 2020-04-15 22:18:59
 type: categories
-layout: categories
 ---
