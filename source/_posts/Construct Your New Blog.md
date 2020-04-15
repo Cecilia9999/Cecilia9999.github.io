@@ -181,6 +181,42 @@ You can also change some details as you like by _vim_ the theme's configuration 
 
 More info: [NexT theme](http://theme-next.iissnan.com/)
 
+3) Details: *vim* ``` themes/next/_config.yml ``` 
+``` bash
+menu:
+  home: /|| home
+  about: /about/|| user
+  tags: /tags/|| tags
+  categories: /categories/|| th
+  archives: /archives/|| archive
+  #schedule: /schedule/|| calendar
+  #sitemap: /sitemap.xml|| sitemap
+  #commonweal: /404/|| heartbeat
+
+# Enable/Disable menu icons.
+menu_icons:
+  enable: true			
+```
+**Importance**: no space between '/' and '||',  ' /xxx/|| icon '.
+Then you need to create new pages for new-opened buttons (tags, categories, about)
+``` bash
+$ cd blog
+$ hexo new page "tags"
+$ hexo new page "categories"
+$ hexo new page "about"
+```
+After creation, *vim* ``` blog/source/tags/index.md ```
+```
+---
+title: tags
+date: 2020-04-15 22:18:02
+type: "tags"			# add this fixed sentence 
+comments: false			# add
+---
+```
+The similar settings for *about* and *categories*
+
+
 ## Post Your Blog
 ``` bash
 $ cd blog
