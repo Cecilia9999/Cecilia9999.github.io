@@ -187,6 +187,6 @@ More info: [NexT theme](http://theme-next.iissnan.com/)
 $ cd blog
 $ hexo new "PostName"
 ```
-A new blog PostName.md file is generated in ```blog/sources/_posts/```. You can also create a *.md* file directly under this path.
+A new blog _PostName.md_ file is generated in ```blog/sources/_posts/```. You can also create a *.md* file directly under this path.
 
 #### _Now, enjoy writing your blog : )_
