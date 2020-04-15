@@ -1,14 +1,12 @@
 ---
-title: Try Your New Blog:Hexo + GitHub
-date: 2020-04-14 17:19:53
+title: post1
+date: 2020-04-15 21:22:00
 categories:
   - website
 tags:
   - hexo
   - github
-  - atom
 ---
-
 # Hello, everyone!
 Today, I try to create the first blog via **Hexo + GitHub**. This blog is for recording the process of it.
 Hope that I make it simple and clear. Let's see it!
