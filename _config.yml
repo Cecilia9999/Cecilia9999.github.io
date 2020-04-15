@@ -41,7 +41,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
@@ -101,3 +101,11 @@ deploy:
   type: git
   repository: git@github.com:Cecilia9999/Cecilia9999.github.io.git
   branch: master
+
+# hexo-tag-cloud
+tag_cloud:
+    textFont: Trebuchet MS, Helvetica
+    textColor: '#333'
+    textHeight: 25
+    outlineColor: '#FFC0C3'
+    maxSpeed: 0.2
