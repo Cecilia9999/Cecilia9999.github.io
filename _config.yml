@@ -24,9 +24,9 @@ pretty_urls:
 # Directory
 source_dir: source
 public_dir: public
-tag_dir: source/tags
+tag_dir: tags
 archive_dir: archives
-category_dir: source/categories
+category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
