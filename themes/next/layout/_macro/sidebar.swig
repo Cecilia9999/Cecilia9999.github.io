@@ -30,10 +30,12 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             {% if theme.avatar %}
+	    <a href='/'>
               <img class="site-author-image" itemprop="image"
-                src="{{ url_for( theme.avatar | default(theme.images + '/avatar.gif') ) }}"
+                src="{{ url_for( theme.avatar | default(theme.images + '/selficon.png') ) }}"
                 alt="{{ theme.author }}" />
-            {% endif %}
+            </a>
+	    {% endif %}
               <p class="site-author-name" itemprop="name">{{ theme.author }}</p>
               <p class="site-description motion-element" itemprop="description">{#
             #}{% if theme.seo %}{#
@@ -49,7 +51,7 @@
             {% if config.archive_dir != '/' and site.posts.length > 0 %}
               <div class="site-state-item site-state-posts">
               {% if theme.menu.archives %}
-                <a href="{{ url_for(theme.menu.archives).split('||')[0] | trim }}">
+		<a href="{{ url_for(theme.menu.archives).split('||')[0] | trim }}">
               {% else %}
                 <a href="{{ url_for(config.archive_dir) }}">
               {% endif %}

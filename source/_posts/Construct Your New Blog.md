@@ -10,6 +10,7 @@ tags:
 # Hello, everyone!
 Today, I try to create the first blog via **Hexo + GitHub**. This blog is for recording the process of it.
 Hope that I make it simple and clear. Let's see it!
+<!--more-->
 
 # Preparation
 
