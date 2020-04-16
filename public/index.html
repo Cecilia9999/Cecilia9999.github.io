@@ -260,12 +260,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/15/Construct%20Your%20New%20Blog/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/16/post/post2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cecilia Song">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/selficon.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -279,7 +279,148 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/04/15/Construct%20Your%20New%20Blog/" itemprop="url">Construct Your New Blog</a></h1>
+                <a class="post-title-link" href="/2020/04/16/post/post2/" itemprop="url">Git Command</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-04-16T21:39:58+09:00">
+                2020-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index">
+                    <span itemprop="name">tools</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/15/post/post1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cecilia Song">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/selficon.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="To be a developer">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/15/post/post1/" itemprop="url">Construct Your New Blog</a></h1>
         
 
         <div class="post-meta">
@@ -352,85 +493,14 @@
 
       
         
-          
-            <h1 id="Hello-everyone"><a href="#Hello-everyone" class="headerlink" title="Hello, everyone!"></a>Hello, everyone!</h1><p>Today, I try to create the first blog via <strong>Hexo + GitHub</strong>. This blog is for recording the process of it.<br>Hope that I make it simple and clear. Let’s see it!</p>
-<h1 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h1><h3 id="Check-the-following-packages"><a href="#Check-the-following-packages" class="headerlink" title="Check the following packages:"></a>Check the following packages:</h3><ul>
-<li><a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a></li>
-<li><a href="https://git-scm.com/downloads/" target="_blank" rel="noopener">Git</a></li>
-<li><a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a></li>
-</ul>
-<p>Before installing Hexo, the first two packages must be installed.</p>
-<h3 id="Make-Your-User-Page-on-Github"><a href="#Make-Your-User-Page-on-Github" class="headerlink" title="Make Your User Page on Github"></a>Make Your User Page on Github</h3><p>1) Log in your GitHub and create a new repository, which its name should be</p>
-<blockquote>
-<p><strong>&lt;YourAccountName&gt;.github.io</strong></p>
-</blockquote>
-<p>Here,  <em>.github.io</em>  is a fixed suffix for User Page.</p>
-<p>2) Choose a local site to clone your repository with SSH address</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@github.com:Name/Name.github.io.git Name</span><br><span class="line"><span class="comment"># git clone &lt;remote repo&gt; &lt;local shortname&gt;</span></span><br></pre></td></tr></table></figure>
-<p>In this local site you will have a empty local repository <em>Name</em> with default brach <em>master</em> and default <em>.git</em> directory (<em>.git</em> means there exists a repository).</p>
-<h3 id="Install-Node-js"><a href="#Install-Node-js" class="headerlink" title="Install Node.js"></a>Install Node.js</h3><p>You need use <em>npm</em> command to install <em>Hexo</em> which is based on <em>Node.js</em>. For MAC OS, you can download package from official website and install it just by a click. You will see the version if installed successfully by</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ node -v</span><br><span class="line">$ npm -v</span><br></pre></td></tr></table></figure>
-
-<h3 id="Install-Hexo"><a href="#Install-Hexo" class="headerlink" title="Install Hexo"></a>Install Hexo</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-
-<h1 id="Construct-Blog"><a href="#Construct-Blog" class="headerlink" title="Construct Blog"></a>Construct Blog</h1><p>Enter into your new local repository and construct a new directory <code>blog/</code> to save Hexo files. The construction of local directory is</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">local repo</span><br><span class="line">  ├── blog</span><br><span class="line">  └── .git</span><br></pre></td></tr></table></figure>
-<h3 id="Initialize-Hexo"><a href="#Initialize-Hexo" class="headerlink" title="Initialize Hexo"></a>Initialize Hexo</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> blog</span><br><span class="line">$ hexo init</span><br><span class="line">$ npm install  <span class="comment"># Install</span></span><br></pre></td></tr></table></figure>
-<p>You will see some new documents generated:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">blog</span><br><span class="line"> ├── _config.yml   # website configuration file</span><br><span class="line"> ├── package.json</span><br><span class="line"> ├── scaffolds     # Template directory</span><br><span class="line"> ├── source        # Store user source</span><br><span class="line"> |   ├── _drafts</span><br><span class="line"> |   └── _posts</span><br><span class="line"> └── themes        # Store the themes of website</span><br></pre></td></tr></table></figure>
-<p>Now, you can visit blog site locally after running Hexo server</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>Check it by searching <a href="http://localhost:4000" target="_blank" rel="noopener">localhost:4000</a>.</p>
-<h3 id="Make-configurations-for-Hexo"><a href="#Make-configurations-for-Hexo" class="headerlink" title="Make configurations for Hexo"></a>Make configurations for Hexo</h3><p>Make configurations to relate local blog to your GitHub User Page</p>
-<p>1) vim <code>_config.yml</code> (exists in local path <code>blog/</code>), change the last part from default settings</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: http://hexo.io/docs/deployment.html</span></span><br><span class="line">deploy:   </span><br><span class="line">  <span class="built_in">type</span>:</span><br></pre></td></tr></table></figure>
-<p>to</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></span><br><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repository: git@github.com:Name/Name.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-<p>This configuration means everytime when you release blog, Hexo will generate a static <em>.html</em> file to remote site (your GitHub User Page) with branch of <em>master</em>.</p>
-<p>2) Install a plugin and release your blog on website</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npm install hexo-deployer-git --save</span><br><span class="line">$ hexo clean</span><br><span class="line">$ hexo generate</span><br><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>Congratulations! Now you have a real blog on website. Check it by searching <a href="http://Name.github.io" target="_blank" rel="noopener">http://Name.github.io</a>.</p>
-<h1 id="Submit-local-Hexo-files-to-GitHub"><a href="#Submit-local-Hexo-files-to-GitHub" class="headerlink" title="Submit local Hexo files to GitHub"></a>Submit local Hexo files to GitHub</h1><p>Everytime you release a blog, only <em>.html</em> file will be generated and submit to <em>master</em> branch in GitHub. The origin <em>.md</em> file cannot save to GitHub. Although you can use extra hard disk to save these original files…<br>Here, if you don’t remind these files released on web, you can use a new branch <strong>hexo</strong> to store them.</p>
-<p>1) Initialize an new Git repository under local hexo path</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git init</span><br></pre></td></tr></table></figure>
-<p>A <code>.git</code> directory is generated, which includes some default files of a new repository.</p>
-<p>2) Map local into remote repository</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add origin git@github.com:Name/Name.github.io.git</span><br></pre></td></tr></table></figure>
-<p>origin: default local repo shortname</p>
-<p>3) Use a new branch <strong>hexo</strong> to store Hexo sources</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># create a new local brach and change into it</span></span><br><span class="line"><span class="comment"># check HEAD file in .git, the pointer now points to hexo</span></span><br><span class="line">$ git checkout -b hexo</span><br><span class="line"></span><br><span class="line"><span class="comment"># add hexo files to index/stage</span></span><br><span class="line">$ git add .            </span><br><span class="line"></span><br><span class="line"><span class="comment"># submit files in stage to current branch hexo</span></span><br><span class="line">$ git commit -m <span class="string">"comment"</span>   </span><br><span class="line"></span><br><span class="line"><span class="comment"># push local(origin) branch hexo to remote new branch hexo (1st time)</span></span><br><span class="line">$ git push origin hexo:hexo</span><br></pre></td></tr></table></figure>
-<p>Note that push local branch to a non-existed/existed remote branch:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin &lt;<span class="built_in">local</span> b&gt;:&lt;remote b&gt;</span><br><span class="line">$ git push origin &lt;remote b&gt;</span><br></pre></td></tr></table></figure>
-<p><strong>Important</strong>: Please change your <strong>default</strong> branch of <strong>remote</strong> repository as <strong>hexo</strong>. For this step, you need to go to your remote repository and set</p>
-<blockquote>
-<p>Settings -&gt; Branches -&gt; Default branch -&gt; choose hexo -&gt; Update</p>
-</blockquote>
-<p>Now you can check your GitHub and there are two branch and default is hexo:</p>
-<ul>
-<li>master: save generated blog pages (.html)</li>
-<li>hexo: sources of Hexo blog files (.md)</li>
-</ul>
-<h1 id="Manage-Blog"><a href="#Manage-Blog" class="headerlink" title="Manage Blog"></a>Manage Blog</h1><p>Everytime you change your hexo files, please submit to <strong>remote hexo branch</strong> firstly</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git add .</span><br><span class="line">$ git commit -m <span class="string">"comment"</span></span><br><span class="line">$ git push origin hexo</span><br></pre></td></tr></table></figure>
-<p>Then release your blog again (automatically update remote master branch)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo g</span><br><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
-
-<h2 id="Change-Themes-for-Your-Blog"><a href="#Change-Themes-for-Your-Blog" class="headerlink" title="Change Themes for Your Blog"></a>Change Themes for Your Blog</h2><p>The default theme is <em>landscape</em> and you can download other themes into <code>blog/themes</code>. Here use the popular theme <em>next</em> as an example.</p>
-<p>1) Download theme packages</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/iissnan/hexo-theme-next.git themes/next</span><br></pre></td></tr></table></figure>
-<p>2) Change hexo configuration<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim blog/_config.yml</span><br></pre></td></tr></table></figure><br>Find keyword and change <code>theme: landscape</code>  to  <code>theme: next</code>.<br>You can also change some details as you like by <em>vim</em> the theme’s configuration file: <code>theme/next/_config.yml</code>.</p>
-<p>More info: <a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">NexT theme</a></p>
-<p>3) Details: <em>vim</em> <code>themes/next/_config.yml</code> </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: /|| home</span><br><span class="line">  about: /about/|| user</span><br><span class="line">  tags: /tags/|| tags</span><br><span class="line">  categories: /categories/|| th</span><br><span class="line">  archives: /archives/|| archive</span><br><span class="line">  <span class="comment">#schedule: /schedule/|| calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml|| sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/|| heartbeat</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Enable/Disable menu icons.</span></span><br><span class="line">menu_icons:</span><br><span class="line">  <span class="built_in">enable</span>: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p><strong>Importance</strong>: no space between ‘/‘ and ‘||’,  ‘ /xxx/|| icon ‘.<br>Then you need to create new pages for new-opened buttons (tags, categories, about)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> blog</span><br><span class="line">$ hexo new page <span class="string">"tags"</span></span><br><span class="line">$ hexo new page <span class="string">"categories"</span></span><br><span class="line">$ hexo new page <span class="string">"about"</span></span><br></pre></td></tr></table></figure>
-<p>After creation, <em>vim</em> <code>blog/source/tags/index.md</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: 2020-04-15 22:18:02</span><br><span class="line">type: &quot;tags&quot;			# add this fixed sentence </span><br><span class="line">comments: false			# add</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-<p>The similar settings for <em>about</em> and <em>categories</em></p>
-<h2 id="Post-Your-Blog"><a href="#Post-Your-Blog" class="headerlink" title="Post Your Blog"></a>Post Your Blog</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> blog</span><br><span class="line">$ hexo new <span class="string">"PostName"</span></span><br></pre></td></tr></table></figure>
-<p>A new blog <em>PostName.md</em> file is generated in <code>blog/sources/_posts/</code>. You can also create a <em>.md</em> file directly under this path.</p>
-<h4 id="Now-enjoy-writing-your-blog"><a href="#Now-enjoy-writing-your-blog" class="headerlink" title="Now, enjoy writing your blog : )"></a><em>Now, enjoy writing your blog : )</em></h4>
-          
+          <h1 id="Hello-everyone"><a href="#Hello-everyone" class="headerlink" title="Hello, everyone!"></a>Hello, everyone!</h1><p>Today, I try to create the first blog via <strong>Hexo + GitHub</strong>. This blog is for recording the process of it.<br>Hope that I make it simple and clear. Let’s see it!</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/15/post/post1/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -499,6 +569,12 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+	    <a href='/'>
+              <img class="site-author-image" itemprop="image"
+                src="/images/selficon.png"
+                alt="Cecilia Song" />
+            </a>
+	    
               <p class="site-author-name" itemprop="name">Cecilia Song</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
@@ -508,9 +584,9 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/%7C%7C%20archive">
+		<a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -521,7 +597,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -532,7 +608,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -582,7 +658,7 @@
     	  <h3 class="widget-title">Tag Cloud</h3>
     	  <div id="myCanvasContainer" class="widget tagcloud">
             <canvas width="250" height="250" id="resCanvas" style="width:100%">
-              <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/" rel="tag">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li></ul>
+              <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/" rel="tag">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li></ul>
       	    </canvas>
     	  </div>
         </div>
