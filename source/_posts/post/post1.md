@@ -7,21 +7,20 @@ tags:
   - hexo
   - github
 ---
+
 # Hello, everyone!
-Today, I try to create the first blog via **Hexo + GitHub**. This blog is for recording the process of it.
-Hope that I make it simple and clear. Let's see it!
+Today, I try to create the first blog via **Hexo + GitHub**. This blog is for recording the process of it. Hope that I make it simple and clear. Let's see it!
 <!--more-->
 
 # Preparation
-
-### Check the following packages:
+## Check the following packages:
 * [Node.js](https://nodejs.org/en/)
 * [Git](https://git-scm.com/downloads/)
 * [Hexo](https://hexo.io/)
 
 Before installing Hexo, the first two packages must be installed.
 
-### Make Your User Page on Github
+## Make User Page on Github
 1) Log in your GitHub and create a new repository, which its name should be
 > **\<YourAccountName\>.github.io**
 
@@ -35,14 +34,14 @@ $ git clone git@github.com:Name/Name.github.io.git Name
 In this local site you will have a empty local repository *Name* with default brach *master* and default *.git* directory (*.git* means there exists a repository).
 
 
-### Install Node.js
+## Install Node.js
 You need use *npm* command to install *Hexo* which is based on *Node.js*. For MAC OS, you can download package from official website and install it just by a click. You will see the version if installed successfully by
 ``` bash
 $ node -v
 $ npm -v
 ```
 
-### Install Hexo
+## Install Hexo
 ``` bash
 $ sudo npm install -g hexo-cli
 ```
@@ -54,7 +53,7 @@ local repo
   ├── blog
   └── .git  
 ```
-### Initialize Hexo
+## Initialize Hexo
 ``` bash
 $ cd blog
 $ hexo init
@@ -77,7 +76,7 @@ $ hexo server
 ```
 Check it by searching [localhost:4000](http://localhost:4000).
 
-### Make configurations for Hexo
+## Make configurations for Hexo
 Make configurations to relate local blog to your GitHub User Page
 
 1) vim ```_config.yml``` (exists in local path ```blog/```), change the last part from default settings
@@ -107,7 +106,7 @@ $ hexo deploy
 ```
 Congratulations! Now you have a real blog on website. Check it by searching http://Name.github.io.
 
-# Submit local Hexo files to GitHub
+## Submit local Hexo files to GitHub
 Everytime you release a blog, only *.html* file will be generated and submit to *master* branch in GitHub. The origin *.md* file cannot save to GitHub. Although you can use extra hard disk to save these original files...
 Here, if you don't remind these files released on web, you can use a new branch **hexo** to store them.
 
@@ -151,7 +150,7 @@ Now you can check your GitHub and there are two branch and default is hexo:
 * hexo: sources of Hexo blog files (.md)
 
 
-# Manage Blog
+# Daily Management of Blog
 Everytime you change your hexo files, please submit to **remote hexo branch** firstly
 ``` bash
 $ git add .
@@ -225,4 +224,5 @@ $ hexo new "PostName"
 ```
 A new blog _PostName.md_ file is generated in ```blog/sources/_posts/```. You can also create a *.md* file directly under this path.
 
-#### _Now, enjoy writing your blog : )_
+
+*_Now, enjoy writing your blog : )_*
