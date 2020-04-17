@@ -10,7 +10,7 @@ tags:
 Almost everyday you may use git to manage your project. This article is for recording some commands I often use. All commands posted here are checked on web and are updated continuously. Let's see it!
 <!--more-->
 
-Firstly, I would like to put the official [documentation of Git]() here and emphasize how **important** it is to check documentation whenever you have confusions and problems.
+Firstly, I would like to put the [documentation of Git](https://git-scm.com/book/en/v2) here and emphasize how **important** it is to check documentation whenever you have confusions and problems.
 The followings is a summary of some git commands I often use or I've met before.
 
 # Get a Git repository
