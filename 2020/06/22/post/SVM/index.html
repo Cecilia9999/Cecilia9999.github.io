@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="svm以及logistic回归都是基于感知机发展出来的，三者都是线性分类器（线性分类器通常是要学习出一个超平面，然后用它进行新数据的预测）。 感知机分类模型选超平面时，其实有很多种选择，但如何确定最佳超平面？我们认为数据点应该尽量远离超平面或决策边界，因为如果数据点距离决策边界很近，决策边界的一点点改动，都会造成一些数据点的预测类别改变，这是不稳定的。 例如，下图中的所有虚线做分类线都能将红色圆点">
+<meta name="description" content="支持向量机 (SVM) 以及 Logistic 回归都是基于感知机 (Perceptron) 发展出来的，三者都是线性分类器（线性分类器通常是要学习出一个超平面，然后用它进行新数据的预测）。 感知机分类模型选超平面时，其实有很多种选择，但如何确定最佳超平面？我们认为数据点应该尽量远离超平面或决策边界，因为如果数据点距离决策边界很近，决策边界的一点点改动，都会造成一些数据点的预测类别改变，这是不稳定">
 <meta property="og:type" content="article">
 <meta property="og:title" content="支持向量机（Support Vector Machine）">
 <meta property="og:url" content="http://yoursite.com/2020/06/22/post/SVM/index.html">
 <meta property="og:site_name" content="To be a developer">
-<meta property="og:description" content="svm以及logistic回归都是基于感知机发展出来的，三者都是线性分类器（线性分类器通常是要学习出一个超平面，然后用它进行新数据的预测）。 感知机分类模型选超平面时，其实有很多种选择，但如何确定最佳超平面？我们认为数据点应该尽量远离超平面或决策边界，因为如果数据点距离决策边界很近，决策边界的一点点改动，都会造成一些数据点的预测类别改变，这是不稳定的。 例如，下图中的所有虚线做分类线都能将红色圆点">
+<meta property="og:description" content="支持向量机 (SVM) 以及 Logistic 回归都是基于感知机 (Perceptron) 发展出来的，三者都是线性分类器（线性分类器通常是要学习出一个超平面，然后用它进行新数据的预测）。 感知机分类模型选超平面时，其实有很多种选择，但如何确定最佳超平面？我们认为数据点应该尽量远离超平面或决策边界，因为如果数据点距离决策边界很近，决策边界的一点点改动，都会造成一些数据点的预测类别改变，这是不稳定">
 <meta property="og:image" content="http://yoursite.com/2020/06/22/post/SVM/markdown-img-paste-20200622131000250.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/22/post/SVM/markdown-img-paste-20200622131105197.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/22/post/SVM/markdown-img-paste-20200622141314674.png">
@@ -161,7 +161,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/06/22/post/SVM/markdown-img-paste-20200622170026716.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/22/post/SVM/markdown-img-paste-20200622170436384.png">
 <meta property="article:published_time" content="2020-06-22T03:23:08.000Z">
-<meta property="article:modified_time" content="2020-06-22T08:12:50.000Z">
+<meta property="article:modified_time" content="2020-06-22T08:20:00.000Z">
 <meta property="article:author" content="Cecilia Song">
 <meta property="article:tag" content="SVM">
 <meta property="article:tag" content="machine learning">
@@ -429,10 +429,13 @@
       
 
       
-        <p>svm以及logistic回归都是基于感知机发展出来的，三者都是线性分类器（线性分类器通常是要学习出一个超平面，然后用它进行新数据的预测）。</p>
+        <p>支持向量机 (SVM) 以及 Logistic 回归都是基于感知机 (Perceptron) 发展出来的，三者都是线性分类器（线性分类器通常是要学习出一个超平面，然后用它进行新数据的预测）。</p>
 <p>感知机分类模型选超平面时，其实有很多种选择，但如何确定最佳超平面？我们认为数据点应该尽量远离超平面或决策边界，因为如果数据点距离决策边界很近，决策边界的一点点改动，都会造成一些数据点的预测类别改变，这是不稳定的。</p>
+<a id="more"></a>
+
 <p>例如，下图中的所有虚线做分类线都能将红色圆点和绿色加号完全分开，但直观上会觉得距离两类数据点距离都最远的蓝色虚线是最佳分类线选择，其对于新数据的预测分类的正确性要比其他虚线的高。</p>
-<p><img src="markdown-img-paste-20200622131000250.png" alt=""><br>总结一下，对一个数据点进行分类，当超平面离数据点的“间隔”越大，分类的可靠性也越大。因此我们需要让所选择的超平面能够最大化这个“间隔”值。那这个“间隔值”到底是什么？又如何去最大化？先来看看间隔值如何定义。</p>
+<p><img src="markdown-img-paste-20200622131000250.png" alt=""></p>
+<p>总结一下，对一个数据点进行分类，当超平面离数据点的“间隔”越大，分类的可靠性也越大。因此我们需要让所选择的超平面能够最大化这个“间隔”值。那这个“间隔值”到底是什么？又如何去最大化？先来看看间隔值如何定义。</p>
 <h2 id="两个间隔定义"><a href="#两个间隔定义" class="headerlink" title="两个间隔定义"></a>两个间隔定义</h2><h3 id="1-函数间隔（functional-margin）"><a href="#1-函数间隔（functional-margin）" class="headerlink" title="1.   函数间隔（functional margin）"></a>1.   函数间隔（functional margin）</h3><p>在超平面 <code>w*x + b = 0</code> 确定的情况下，<code>| w*x + b |</code> 能够表示点 <strong>x</strong> 距离超平面的远近（根据点到面距离公式知此为分子），而通过观察 <code>w*x + b</code> 的符号与标签 y 的是否一致可判断分类是否正确。即可以用 <code>y*(w*x + b)</code> 的正负来判定分类的正确性。</p>
 <p>定义超平面关于训练集中某一点 (x<sup>(i)</sup>，y<sup>(i)</sup>) 的函数间隔</p>
 <p><img src="markdown-img-paste-20200622131105197.png" alt=""></p>
@@ -695,11 +698,11 @@
 </ul>
 <p>两种方法都是常见的分类算法</p>
 <ol>
-<li><p>从目标函数来看，逻辑回归采用的是logistical loss，svm采用的是hinge loss。这两个损失函数的目的都是增加对分类影响较大的数据点的权重，减少与分类关系较小的数据点的权重。SVM只考虑support vectors（和分类最相关的少数点）。逻辑回归通过非线性映射，大大减小了离分类平面较远的点的权重，相对提升了与分类最相关的数据点的权重。两者的根本目的都是一样的。</p>
+<li><p>从目标函数来看，逻辑回归采用的是对数损失，SVM 采用的是 hinge 损失。这两个损失函数的目的都是增加对分类影响较大的数据点的权重，减少与分类关系较小的数据点的权重。SVM 只考虑 Support Vectors（和分类最相关的少数点）。逻辑回归通过非线性映射，大大减小了离分类平面较远的点的权重，相对提升了与分类最相关的数据点的权重。两者的根本目的都是一样的。</p>
 </li>
-<li><p>两个方法都可以增加不同的正则化项。所以在很多实验中，两种算法的结果是很接近的。逻辑回归模型更简单，特别是大规模线性分类时比较方便。SVM的理解和优化相对来说复杂一些，但 SVM的原问题转化为对偶问题后，分类只需要计算与少数几个支持向量的距离，当计算核函数时优势很明显。</p>
+<li><p>两个方法都可以增加不同的正则化项。所以在很多实验中，两种算法的结果是很接近的。逻辑回归模型更简单，特别是大规模线性分类时比较方便。SVM 的理解和优化相对来说复杂一些，但 SVM 的原问题转化为对偶问题后，分类只需要计算与少数几个支持向量的距离，当计算核函数时优势很明显。</p>
 </li>
-<li><p>两者对异常的敏感度也不一样。同样的线性分类情况下，如果异常点较多无法剔除时，LR中每个样本都是有贡献的，最大似然后会自动压制异常的贡献，SVM+软间隔对异常还是比较敏感，因为其训练只需要支持向量，有效样本较少，一旦被干扰，预测结果难以预料。</p>
+<li><p>两者对异常的敏感度也不一样。同样的线性分类情况下，如果异常点较多无法剔除时，LR 中每个样本都是有贡献的，最大似然后会自动压制异常的贡献，SVM 软间隔对异常还是比较敏感，因为其训练只需要支持向量，有效样本较少，一旦被干扰，预测结果难以预料。</p>
 </li>
 </ol>
 
