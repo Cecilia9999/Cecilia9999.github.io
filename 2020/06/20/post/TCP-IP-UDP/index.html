@@ -88,7 +88,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/06/20/post/TCP-IP-UDP/link.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/20/post/TCP-IP-UDP/down.png">
 <meta property="article:published_time" content="2020-06-20T04:49:51.000Z">
-<meta property="article:modified_time" content="2020-06-20T08:07:00.000Z">
+<meta property="article:modified_time" content="2020-06-22T08:31:44.000Z">
 <meta property="article:author" content="Cecilia Song">
 <meta property="article:tag" content="TCP&#x2F;IP">
 <meta property="article:tag" content="UDP">
@@ -362,10 +362,8 @@
 </blockquote>
 <a id="more"></a>
 <p>TCP的连接需要经过多次握手确认以及时间等待，因此过程复杂，实时性差。而UDP没有连接过程，因此实时性强。<br>TCP报文加入了同步序列号确认号等，保证了传输可靠性。但在传输相同大小数据时，<br>，因此TCP开销大于UDP。</p>
-<blockquote>
 <p>一句话：可靠性让TCP变得复杂耗时</p>
-</blockquote>
-<p>应用场景：</p>
+<p><strong>应用场景</strong>：</p>
 <ul>
 <li>UDP<br>注重实时高速，可靠性要求低的场合。面向数据报，数据大多为短消息，有大量client，网络负担重但对响应速度要求高<br>支持一对一、一对多、多对多等通信（网络直播、动作类网游）。</li>
 <li>TCP<br>注重可靠性，有延迟无所谓，需要大量传输数据。支持点对点通信（数据传输，纸牌游戏）。</li>
