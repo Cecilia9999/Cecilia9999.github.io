@@ -6,6 +6,7 @@ categories:
 tags:
   - SVM
   - machine learning
+mathjax: true
 ---
 支持向量机 (SVM) 以及 Logistic 回归都是基于感知机 (Perceptron) 发展出来的，三者都是线性分类器（线性分类器通常是要学习出一个超平面，然后用它进行新数据的预测）。
 

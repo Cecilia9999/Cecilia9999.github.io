@@ -109,3 +109,10 @@ tag_cloud:
     textHeight: 25
     outlineColor: '#FFC0C3'
     maxSpeed: 0.2
+
+# math
+math:
+   engine: 'mathjax'
+   mathjax:
+    src: custom_mathjax_source
+ 
