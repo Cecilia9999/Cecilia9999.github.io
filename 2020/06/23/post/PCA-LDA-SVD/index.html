@@ -106,7 +106,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623142558704.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623142631407.png">
 <meta property="article:published_time" content="2020-06-23T04:28:25.000Z">
-<meta property="article:modified_time" content="2020-06-23T05:29:53.000Z">
+<meta property="article:modified_time" content="2020-06-23T05:36:50.000Z">
 <meta property="article:author" content="Cecilia Song">
 <meta property="article:tag" content="PCA">
 <meta property="article:tag" content="LDA">
@@ -492,6 +492,7 @@
 <p><img src="markdown-img-paste-20200623142631407.png" alt=""></p>
 <p>开头说到 PCA 降维，需要找到样本协方差矩阵 <em>X</em><sup>T</sup><em>X</em>  的最大的 <em>k</em> 个特征向量，组成低维正交基组来做降维。而 SVD 也可以找到样本协方差矩阵 <em>X</em><sup>T</sup><em>X</em>  的最大的 <em>k</em> 个特征向量，并且不用计算协方差矩阵，而是取 SVD 分解后的右奇异矩阵 <em>V</em><sub>n</sub> × <em>k</em> 的前 <em>k</em> 列向量组成低维正交基组，达到降维目的。</p>
 <p>注：<strong>左奇异矩阵可以用于行数的压缩</strong> ；<strong>右奇异矩阵可以用于列数即特征的压缩</strong>，即 PCA 降维。　　</p>
+<p><strong>Reference</strong><br><a href="https://www.cnblogs.com/pinard/p/6244265.html" target="_blank" rel="noopener">https://www.cnblogs.com/pinard/p/6244265.html</a><br><a href="https://www.cnblogs.com/jerrylead/archive/2011/04/18/2020216.html" target="_blank" rel="noopener">https://www.cnblogs.com/jerrylead/archive/2011/04/18/2020216.html</a><br><a href="https://www.cnblogs.com/guoyaohua/p/8855636.html" target="_blank" rel="noopener">https://www.cnblogs.com/guoyaohua/p/8855636.html</a><br><a href="https://www.cnblogs.com/pinard/p/6251584.html" target="_blank" rel="noopener">https://www.cnblogs.com/pinard/p/6251584.html</a></p>
 
       
     </div>
