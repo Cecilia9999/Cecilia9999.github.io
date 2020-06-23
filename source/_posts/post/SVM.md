@@ -490,3 +490,15 @@ _α_ 的求解一样也可以通过 **SMO算法** ，之后就可以得到软间
 2. 两个方法都可以增加不同的正则化项。所以在很多实验中，两种算法的结果是很接近的。逻辑回归模型更简单，特别是大规模线性分类时比较方便。SVM 的理解和优化相对来说复杂一些，但 SVM 的原问题转化为对偶问题后，分类只需要计算与少数几个支持向量的距离，当计算核函数时优势很明显。
 
 3. 两者对异常的敏感度也不一样。同样的线性分类情况下，如果异常点较多无法剔除时，LR 中每个样本都是有贡献的，最大似然后会自动压制异常的贡献，SVM 软间隔对异常还是比较敏感，因为其训练只需要支持向量，有效样本较少，一旦被干扰，预测结果难以预料。
+
+
+### Reference
+https://www.zhihu.com/question/21094489
+https://blog.csdn.net/v_JULY_v/article/details/7624837
+https://www.cnblogs.com/xxrxxr/p/7535587.html
+https://www.bookstack.cn/read/Vay-keen-Machine-learning-learning-notes/6.md
+https://zhuanlan.zhihu.com/p/54790157
+https://www.zhihu.com/question/58584814/answer/823769937
+https://zhuanlan.zhihu.com/p/26514613
+https://juejin.im/post/5ad1c5f75188255cb07d8c33
+https://www.cnblogs.com/xxrxxr/p/7538430.html

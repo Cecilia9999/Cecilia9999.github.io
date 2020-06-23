@@ -190,3 +190,10 @@ SVD 分解对降维有什么好处呢？注意到 SVD 的奇异值矩阵中的�
 开头说到 PCA 降维，需要找到样本协方差矩阵 _X_<sup>T</sup>_X_  的最大的 _k_ 个特征向量，组成低维正交基组来做降维。而 SVD 也可以找到样本协方差矩阵 _X_<sup>T</sup>_X_  的最大的 _k_ 个特征向量，并且不用计算协方差矩阵，而是取 SVD 分解后的右奇异矩阵 _V_<sub>n</sub> × _k_ 的前 _k_ 列向量组成低维正交基组，达到降维目的。
 
 注：**左奇异矩阵可以用于行数的压缩** ；**右奇异矩阵可以用于列数即特征的压缩**，即 PCA 降维。　　
+
+
+**Reference**
+https://www.cnblogs.com/pinard/p/6244265.html
+https://www.cnblogs.com/jerrylead/archive/2011/04/18/2020216.html
+https://www.cnblogs.com/guoyaohua/p/8855636.html
+https://www.cnblogs.com/pinard/p/6251584.html
