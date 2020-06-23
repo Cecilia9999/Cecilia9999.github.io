@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="PCA,LDA,SVD," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="维度灾难我们拥有的数据量是有限的，当特征很多时，即特征空间维度很高时，数据在高维特征空间很稀疏。并且数据会远离特征空间的中心，造成数据在高维空间分布不均，这使得分类器性能大大降低。随着维度增加，训练样本的数量要求随指数增加。因此当样本数据不足的时候，维度灾难会带来过拟合情况。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="降维（PCA&#x2F;LDA&#x2F;SVD）">
+<meta property="og:url" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/index.html">
+<meta property="og:site_name" content="To be a developer">
+<meta property="og:description" content="维度灾难我们拥有的数据量是有限的，当特征很多时，即特征空间维度很高时，数据在高维特征空间很稀疏。并且数据会远离特征空间的中心，造成数据在高维空间分布不均，这使得分类器性能大大降低。随着维度增加，训练样本的数量要求随指数增加。因此当样本数据不足的时候，维度灾难会带来过拟合情况。">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623133537458.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-2020062313355601.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623133759702.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623133851286.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-2020062313443141.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623134450684.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623134617738.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623134714274.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623134810197.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623134851527.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623134902725.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623140106609.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623140306254.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623141025217.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623141140967.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623142142236.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623142224634.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623142521870.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623142558704.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623142631407.png">
+<meta property="article:published_time" content="2020-06-23T04:28:25.000Z">
+<meta property="article:modified_time" content="2020-06-23T05:29:53.000Z">
+<meta property="article:author" content="Cecilia Song">
+<meta property="article:tag" content="PCA">
+<meta property="article:tag" content="LDA">
+<meta property="article:tag" content="SVD">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623133537458.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/"/>
+
+
+
+
+
+  <title>降维（PCA/LDA/SVD） | To be a developer</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/Cecilia9999" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#70B7FD; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">To be a developer</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">A person who is worried about hair loss</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cecilia Song">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/selficon.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="To be a developer">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">降维（PCA/LDA/SVD）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-23T13:28:25+09:00">
+                2020-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">machine learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>维度灾难</strong><br>我们拥有的数据量是有限的，当特征很多时，即特征空间维度很高时，数据在高维特征空间很稀疏。并且数据会远离特征空间的中心，造成数据在高维空间分布不均，这使得分类器性能大大降低。<br>随着维度增加，训练样本的数量要求随指数增加。因此当样本数据不足的时候，维度灾难会带来过拟合情况。</p>
+<a id="more"></a>
+
+<p>解决维度灾难主要有几种方法：增加数据量，加正则化，降维（特征选择和特征提取）。</p>
+<p><strong>特征选择和特征提取</strong></p>
+<ul>
+<li>特征选择：新特征集是原特征集的一个子集，直接去掉一些特征，特征空间始终不变。</li>
+<li>特征提取：新特征集是原特征集的低维映射结果，对原始特征空间进行重构。</li>
+</ul>
+<p><img src="markdown-img-paste-20200623133537458.png" alt=""><br>特征选择是在海量特征里初步筛选出有用的特征，其余的特征直接丢弃。而特征提取是将有用的特征进行降维，尽量保留主要的信息，此时所有有用的特征里的重要信息都基本还在，没有被完全丢弃。先特征选择应，再特征提取。如果特征数不多，可以不做特征选择。如果特征很少，特征提取也不用做。</p>
+<h1 id="无监督学习-PCA-降维"><a href="#无监督学习-PCA-降维" class="headerlink" title="无监督学习 PCA 降维"></a>无监督学习 PCA 降维</h1><p>主成分分析 （Principal Component Analysis，PCA）降维可以从两个方面理解</p>
+<ul>
+<li>基于最大投影方差：数据在新的维度上的投影越分散越好，即投影后的方差越大越好。</li>
+<li>基于最小重构距离：投影后重构的距离越小越好，即原数据与其在新维度上的投影点的距离越小越好。</li>
+</ul>
+<p><img src="markdown-img-paste-2020062313355601.png" alt=""></p>
+<p>图中蓝点为经过中心化后（数据中心点为空心点）原特征空间的数据点，红点为数据在方向向量 u1 上的投影（新特征值为原点到投影点的距离）。所有红点到中心点的距离平方和即为方差；蓝点到投影点的距离，即红线为新特征空间点重构回原特征空间点的距离。根据勾股定理可知，由于所有数据点到原特征空间的中心点距离之和为常数，即所有数据的投影方差加上所有重构距离之和是一个常数，因此 <strong>最大化投影方差等价于最小化重构距离</strong>。</p>
+<h2 id="基于最大投影方差推导"><a href="#基于最大投影方差推导" class="headerlink" title="基于最大投影方差推导"></a>基于最大投影方差推导</h2><p>PCA 先将原特征空间转换成维度不变的新特征空间，转换方式是通过找到新特征空间的坐标系（或正交基组矩阵）使得所有数据在新特征空间的各坐标轴（各正交基向量）上的投影方差都最大。这样，当你想要降维时（如 <em>p</em> → <em>p</em>′ 维）只需取新特征空间中前 <em>p</em>′ 个最大投影方差对应的正交基向量，组成低维特征空间。例如，下图中展示了 2、3 维空间各自的转换（相当于旋转坐标系），黑色是原特征空间的坐标系，蓝色是新特征空间的坐标系。</p>
+<p><img src="markdown-img-paste-20200623133759702.png" alt=""></p>
+<p>多维空间中的 <em>p</em> 个 <em>p</em> 维正交基向量组成的正交基组矩阵 <em>U</em> 为</p>
+<p><img src="markdown-img-paste-20200623133851286.png" alt=""></p>
+<p>PCA 首先将所有样本点中心化（减去均值向量），对于中心化后的样本，假设某一样本   $x^{(i)}  = ( x_{1}^{(i)} ,  x_{2}^{(i)} ,  … ,  x_{p}^{(i)} )^{T}$  ，它沿着某一方向向量 $u^{(j)}  = ( u_{1}^{(j)} ,  u_{2}^{(j)} ,  … ,  u_{p}^{(j)} )^{T}$ 的投影为 $u^{(j) , T}x^{(i)}$ ，如下图所示。</p>
+<p>注意：$u^{(j) , T}x^{(i)} = x^{(i), T} u^{(j)}$ 没有区别，因为投影（数值）就是两个向量的内积。但是在哪个向量上投影，哪个向量就要单位化处理变成单位向量。也就是说只要限制  $u^{(j), T} u^{(j)} = 1$ ，$x^{(i)}$  和 $u^{(j)}$  的内积即为 $x^{(i)}$  在 $u^{(j)}$  上的投影。</p>
+<p><img src="markdown-img-paste-2020062313443141.png" alt=""></p>
+<p>所有样本在这一方向（正交基向量）上的投影方差为</p>
+<p><img src="markdown-img-paste-20200623134450684.png" alt=""></p>
+<p>其中，正交基和正交基组满足约束条件 $u^{(j), T} u^{(j)} = 1$。再看某一样本在各方向向量，即正交基组上的投影为 $U^{ T} x^{(i)}$ （投影值组成的向量）</p>
+<p><img src="markdown-img-paste-20200623134617738.png" alt=""></p>
+<p>则上述投影得到投影方差为</p>
+<p><img src="markdown-img-paste-20200623134714274.png" alt=""></p>
+<p>对角线求和则为该样本在正交基组 <em>U</em> 上的投影方差，<strong>矩阵的对角线求和即为矩阵的迹</strong> ，联想到<strong>协方差矩阵的迹（对角线求和）即为方差</strong>。<br>所以，我们的优化目标是最大化所有样本的投影方差，即最大化上面矩阵的<strong>迹</strong></p>
+<p><img src="markdown-img-paste-20200623134810197.png" alt=""></p>
+<p>上式为带 1 个等式约束条件的优化问题，用拉格朗日函数改写上式</p>
+<p><img src="markdown-img-paste-20200623134851527.png" alt=""></p>
+<p>上式对 U 求导取 0，得到</p>
+<p><img src="markdown-img-paste-20200623134902725.png" alt=""></p>
+<p>𝜆 为协方差矩阵 <em>X</em><sup>T</sup><em>X</em> 的若干特征值组成的矩阵，且特征值在主对角线上，其余位置为 0，<em>U</em>  为 协方差矩阵 <em>X</em><sup>T</sup><em>X</em> 的 <em>p</em> 个特征向量组成的矩阵。若要将原样本从 <em>p</em> 维降到 <em>p</em>′ 维，需要找到最大的 <em>p</em>′ 个特征值对应的特征向量。这 <em>p</em>′ 个特征向量组成的矩阵 <em>U</em> ‘ 即为低维空间的正交基组。</p>
+<p>因此，求样本 x<sup>(𝑖)</sup> 的 <em>p</em>′ 维的主成分，就是求样本集的协方差矩阵 <em>X</em><sup>T</sup><em>X</em> 的前 <em>p</em>′ 个最大特征值对应的特征向量矩阵 <em>U</em> ，然后对于原始样本 x<sup>(𝑖)</sup>，只需要用 z<sup>(𝑖)</sup> = <em>U</em><sup>T</sup> x<sup>(𝑖)</sup> ，就可以把原始样本全部降维。</p>
+<h2 id="PCA-具体计算步骤"><a href="#PCA-具体计算步骤" class="headerlink" title="PCA 具体计算步骤"></a>PCA 具体计算步骤</h2><p>输入：n 个 <em>p</em> 维样本集 𝐷 = { x<sup>(1)</sup> ,  x<sup>(2)</sup> ,  … ,  x<sup>(n)</sup> }，要降维到的维数 <em>p</em>′</p>
+<p>输出：降维后的样本集 𝐷′</p>
+<ol>
+<li><p>对所有的样本进行中心化： x<sup>(<em>j</em>)</sup> = x<sup>(<em>j</em>)</sup> − $\bar{x}$</p>
+</li>
+<li><p>计算样本的协方差矩阵 <em>X</em><sup>T</sup><em>X</em>（<em>p</em>×<em>p</em>）</p>
+</li>
+<li><p>对矩阵 <em>X</em><sup>T</sup><em>X</em> 进行特征值分解</p>
+</li>
+<li><p>取最大的 <em>p</em>′ 个特征值对应的特征向量 ( u<sub>1</sub>, u<sub>2</sub> , … , u<sub><em>p</em>′</sub> )，将它们标准化后，组成特征向量矩阵 <em>U</em>′</p>
+</li>
+<li><p>对样本集中的每一个样本 x<sup>(𝑖)</sup> ，转化为新的样本 z<sup>(𝑖)</sup> = <em>U</em>′ <sup>T</sup> x<sup>(𝑖)</sup> （矩阵形式为 Z = <em>U</em>′<sup>T</sup>X ）</p>
+</li>
+<li><p>输出降维后的样本集 𝐷′ = { z<sup>(1)</sup> ,  z<sup>(2)</sup> ,  … ,  z<sup>(n)</sup> }</p>
+</li>
+</ol>
+<h1 id="监督学习-LDA-降维"><a href="#监督学习-LDA-降维" class="headerlink" title="监督学习 LDA 降维"></a>监督学习 LDA 降维</h1><p>线性判别分析（Linear Discriminant Analysis，LDA）降维作为监督学习的一种，它可以输出类别。其核心思想是：投影后类内方差最小，类间方差最大。投影后希望相同类别数据的投影点尽可能的接近，而不同类别的数据尽可能的分开。</p>
+<p>例如，左图中的两团数据，使用 PCA 降维时，投影的方向会选择 𝜙<sub>2</sub>，这样数据的投影方差会最大。如果两团数据分别为两种类别，PCA 降维后数据都重叠在一起无法进行分类。而 LDA 降维会选择投影后类间方差最大的方向，使两团数据投影后尽量分开，即图中的 𝜙<sub>1</sub> 方向，因此 LDA 降维后可以起到分类效果。</p>
+<p>右图中的两团数据（分布为红、蓝色圈），此时使用 LDA 降维并不能找到很好的方向使得两类数据投影尽可能分开，但使用 PCA 降维却能找到一个较好的投影方向。</p>
+<p><img src="markdown-img-paste-20200623140106609.png" alt=""></p>
+<p>先看二分类 LDA 降维。假设样本集合 𝐷 = ( (x<sup>(1)</sup>,  y<sup>(1)</sup>) ,  (x<sup>(2)</sup> ,  y<sup>(2)</sup>) , … ,   (x<sup>(n)</sup> ,  y<sup>(n)</sup>) )，其中 x<sup>(n)</sup> ∊ ℝ<sup>p</sup> ，𝑦x<sup>(n)</sup> ∊ {0, 1}。定义第 <em>j</em> 类样本的均值向量和类内方差（这里 Σ<sup><em>j</em></sup> 去掉了 1 / n 系数）为</p>
+<p><img src="markdown-img-paste-20200623140306254.png" alt=""></p>
+<p>LDA 要找到一个方向向量 u (k) ，将数据投影在这个向量上，使得类间投影的距离尽可能大，同时类内投影方差尽可能小。某个样本 x (i) 在 u (k) 方向上的投影值为 $u^{(k),T}x^{(i)}$ （或  $x^{(i),T}u^{(k)}$ ），约束 $u^{(k),T}u^{(k)} = 1$。则有</p>
+<ul>
+<li>（<strong>类间计算</strong>）类间投影用各类中心点 $\bar{x}<em>{j}$ 的投影  $u^{(k),T}\bar{x}</em>{j}$ ，并计算两类样本的中心点投影的差值的二范数。</li>
+<li>（<strong>类内计算</strong>）所有样本在所属类的投影方差（见 PCA 计算）为 $u^{(k),T} X^{T} X  u^{(k)}$，并计算两类方差之和。</li>
+</ul>
+<p>则优化目标可以写成类间方差与类内方差的比值的最大化</p>
+<p><img src="markdown-img-paste-20200623141025217.png" alt=""></p>
+<p>其中，𝑆<sub><em>w</em></sub> 为类内散度矩阵（within-class），𝑆<sub><em>𝑏</em></sub> 为类间散度矩阵（between-class），分子分母均为数值。上式则为二类 LDA 优化的目标。拓展到多类别 LDA，就是要求投影矩阵 <em>U</em>’。下图是二分类 LDA 优化目标 <em>J</em> 的求解<br>【摘自b站：机器学习白板推导之线性判别分析LDA】<br><img src="markdown-img-paste-20200623141140967.png" alt=""></p>
+<h2 id="LDA-具体计算步骤"><a href="#LDA-具体计算步骤" class="headerlink" title="LDA 具体计算步骤"></a>LDA 具体计算步骤</h2><p>输入：𝐷 = { (x<sup>(1)</sup> ,  <sup>(1)</sup>) ,  ( x<sup>(2)</sup> ,  y<sup>(2)</sup>) , … ,   (x<sup>(n)</sup> ,  y<sup>(n)</sup>) }，其中 x<sup>(n)</sup> ∊ ℝx<sup>(p)</sup> ，y<sup>(i)</sup> ∊ {𝐶<sub>1</sub>，𝐶<sub>2</sub>，…，𝐶<sub>𝑘</sub>}，降到 <em>p</em>’ 维</p>
+<p>输出：降维后样本集 𝐷’ = { (z<sup>(1)</sup> ,  y<sup>(1)</sup>) ,  (z<sup>(2)</sup>,  y<sup>(2)</sup>) , … ,   (z<sup>(n)</sup> ,  y<sup>(n)</sup>) }</p>
+<ol>
+<li><p>类内、类间散度矩阵 𝑆<sub><em>w</em></sub> 、𝑆<sub><em>𝑏</em></sub></p>
+</li>
+<li><p>计算矩阵 𝑆<sub><em>w</em></sub> <sup>-1</sup> 𝑆<sub><em>𝑏</em></sub></p>
+</li>
+<li><p>取矩阵 𝑆<sub><em>w</em></sub> <sup>-1</sup> 𝑆<sub><em>𝑏</em></sub>  对应的最大的 <em>p</em>’ 个特征值和对应的 <em>p</em>’ 个特征向量 ( u<sub>1</sub>, u<sub>2</sub> , … , u<sub><em>p</em>’</sub> )，组成投影矩阵 <em>U</em>’</p>
+</li>
+<li><p>对样本集中的每一个样本的  x<sup>(𝑖)</sup>  ，转化为新的样本 z<sup>(𝑖)</sup> = <em>U</em>’<sup>𝑇</sup>x<sup>(𝑖)</sup></p>
+</li>
+<li><p>输出降维后的样本集 𝐷′ = { (z<sup>(1)</sup> ,  y<sup>(1)</sup>) ,  (z<sup>(2)</sup>,  y<sup>(2)</sup>) , … ,   (z<sup>(n)</sup> ,  y<sup>(n)</sup>) }</p>
+</li>
+</ol>
+<h1 id="LDA-和-PCA-比较"><a href="#LDA-和-PCA-比较" class="headerlink" title="LDA 和 PCA 比较"></a>LDA 和 PCA 比较</h1><p><strong>相同点</strong>：</p>
+<ol>
+<li>两者均可以对数据进行降维</li>
+<li>两者在降维时均使用了矩阵特征分解的思想</li>
+<li>两者都假设数据符合高斯分布</li>
+</ol>
+<p><strong>不同点</strong>：</p>
+<ol>
+<li>LDA 是有监督的降维方法，而 PCA 是无监督的降维方法</li>
+<li>LDA 降维最多降到类别数 <em>k</em> - 1 的维数，而 PCA 没有这个限制</li>
+<li>LDA 除了可以用于降维，还可以用于分类</li>
+<li>LDA 选择分类性能最好的投影方向，而 PCA 选择样本点投影具有最大方差的方</li>
+</ol>
+<p>#奇异值分解（Singular Value Decomposition，SVD）</p>
+<p>在 PCA 计算中，降维是先求中心化后的协方差矩阵 <em>X</em><sup>T</sup><em>X</em> 的特征值和特征向量，降维时取前 <em>k</em> 个最大特征值对应的特征向量（主成分）组成投影矩阵，即低维空间的正交基组。</p>
+<p><img src="markdown-img-paste-20200623142142236.png" alt=""></p>
+<p>实际中，特征数量往往非常大，例如 1w 个特征，则协方差矩阵为 1w × 1w，计算量会非常大。使用 SVD 这种矩阵分解方法可以大大降低运算量。</p>
+<p>首先，SVD 可以对任意矩阵进行分解（特征分解却只针对方阵）</p>
+<p><img src="markdown-img-paste-20200623142224634.png" alt=""></p>
+<ol>
+<li><p>Σ 只有主对角线上（Σ<sub>𝑖𝑖</sub> ）有数值，每个元素都称为奇异值 σ<sub>𝑖</sub> ，且已按大小排序。</p>
+</li>
+<li><p><em>U</em> 的列向量是 <em>A</em> <em>A</em><sup>T</sup> 的特征向量，<em>U</em> 中的每个特征向量叫做 <em>A</em>  的左奇异向量</p>
+</li>
+<li><p><em>V</em> 的列向量是 <em>A</em><sup>T</sup><em>A</em> 的特征向量，<em>V</em> 中的每个特征向量叫做 <em>A</em>  的右奇异向量。</p>
+</li>
+</ol>
+<p>其中奇异值 σ<sub>𝑖</sub> 的求解为</p>
+<p><img src="markdown-img-paste-20200623142521870.png" alt=""></p>
+<p>这样，可以得到 SVD 分解后三个矩阵 U Σ V 分别满足的条件</p>
+<p><img src="markdown-img-paste-20200623142558704.png" alt=""></p>
+<p>SVD 分解对降维有什么好处呢？注意到 SVD 的奇异值矩阵中的奇异值是按照从大到小排列，而且奇异值的减少特别的快。所以，可以用最大的 k 个的奇异值和对应的左右奇异向量来近似描述矩阵。</p>
+<p><img src="markdown-img-paste-20200623142631407.png" alt=""></p>
+<p>开头说到 PCA 降维，需要找到样本协方差矩阵 <em>X</em><sup>T</sup><em>X</em>  的最大的 <em>k</em> 个特征向量，组成低维正交基组来做降维。而 SVD 也可以找到样本协方差矩阵 <em>X</em><sup>T</sup><em>X</em>  的最大的 <em>k</em> 个特征向量，并且不用计算协方差矩阵，而是取 SVD 分解后的右奇异矩阵 <em>V</em><sub>n</sub> × <em>k</em> 的前 <em>k</em> 列向量组成低维正交基组，达到降维目的。</p>
+<p>注：<strong>左奇异矩阵可以用于行数的压缩</strong> ；<strong>右奇异矩阵可以用于列数即特征的压缩</strong>，即 PCA 降维。　　</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Cecilia Song
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/" title="降维（PCA/LDA/SVD）">http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PCA/" rel="tag"># PCA</a>
+          
+            <a href="/tags/LDA/" rel="tag"># LDA</a>
+          
+            <a href="/tags/SVD/" rel="tag"># SVD</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/22/post/SVM/" rel="next" title="支持向量机（Support Vector Machine）">
+                <i class="fa fa-chevron-left"></i> 支持向量机（Support Vector Machine）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+	    <a href='/'>
+              <img class="site-author-image" itemprop="image"
+                src="/images/selficon.png"
+                alt="Cecilia Song" />
+            </a>
+	    
+              <p class="site-author-name" itemprop="name">Cecilia Song</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+		<a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Cecilia9999" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yxsong924@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#无监督学习-PCA-降维"><span class="nav-number">1.</span> <span class="nav-text">无监督学习 PCA 降维</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于最大投影方差推导"><span class="nav-number">1.1.</span> <span class="nav-text">基于最大投影方差推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PCA-具体计算步骤"><span class="nav-number">1.2.</span> <span class="nav-text">PCA 具体计算步骤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#监督学习-LDA-降维"><span class="nav-number">2.</span> <span class="nav-text">监督学习 LDA 降维</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LDA-具体计算步骤"><span class="nav-number">2.1.</span> <span class="nav-text">LDA 具体计算步骤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LDA-和-PCA-比较"><span class="nav-number">3.</span> <span class="nav-text">LDA 和 PCA 比较</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+      
+      
+        <script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+  	<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+  	<div class="widget-wrap">
+    	  <h3 class="widget-title">Tag Cloud</h3>
+    	  <div id="myCanvasContainer" class="widget tagcloud">
+            <canvas width="250" height="250" id="resCanvas" style="width:100%">
+              <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/LDA/" rel="tag">LDA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCA/" rel="tag">PCA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVD/" rel="tag">SVD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/" rel="tag">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/" rel="tag">TCP/IP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UDP/" rel="tag">UDP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/" rel="tag">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a><span class="tag-list-count">1</span></li></ul>
+      	    </canvas>
+    	  </div>
+        </div>
+      		
+    
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cecilia Song</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
