@@ -88,7 +88,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/06/20/post/TCP-IP-UDP/link.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/20/post/TCP-IP-UDP/down.png">
 <meta property="article:published_time" content="2020-06-20T04:49:51.000Z">
-<meta property="article:modified_time" content="2020-06-22T11:47:22.000Z">
+<meta property="article:modified_time" content="2020-06-26T12:10:14.000Z">
 <meta property="article:author" content="Cecilia Song">
 <meta property="article:tag" content="TCP&#x2F;IP">
 <meta property="article:tag" content="UDP">
@@ -376,7 +376,7 @@
 <h2 id="为什么建立是三次握手，关闭是四次挥手"><a href="#为什么建立是三次握手，关闭是四次挥手" class="headerlink" title="为什么建立是三次握手，关闭是四次挥手"></a>为什么建立是三次握手，关闭是四次挥手</h2><p>因为连接时server可以ACK和SYN报文段一起发送client，而关闭时可能数据传送没结束，所以server只能先发送ACK报文段给client，等数据全部传送完毕后，再次发送FIN给client。因此，分开发送两个报文段导致关闭比建立多一次。</p>
 <h2 id="结束连接最后一步为什么等待-2MSL"><a href="#结束连接最后一步为什么等待-2MSL" class="headerlink" title="结束连接最后一步为什么等待 2MSL"></a>结束连接最后一步为什么等待 2MSL</h2><p>假设网络不可靠，当client发出最后一个ACK后，若server没收到，server会再次发送FIN报文段给client直到得到回应。因此client发送完最后一个ACK后要等到一段时间确保server收到了ACK，只有在2MSL过程中没有再次收到server的FIN，client才能认为server已经结束连接，则自己也可关闭连接，这样TCP连接彻底关闭。</p>
 <h2 id="若建立连接后，客户端突然出现故障"><a href="#若建立连接后，客户端突然出现故障" class="headerlink" title="若建立连接后，客户端突然出现故障"></a>若建立连接后，客户端突然出现故障</h2><p>TCP还设有一个保活计时器，显然，客户端如果出现故障，服务器不能一直等下去，白白浪费资源。服务器每收到一次客户端的请求后都会重新复位这个计时器，时间通常是设置为2小时，若两小时还没有收到客户端的任何数据，服务器就会发送一个探测报文段，以后每隔75秒钟发送一次。若一连发送10个探测报文仍然没反应，服务器就认为客户端出了故障，接着就关闭连接。</p>
-<p>References<br><a href="https://blog.csdn.net/qq_38950316/article/details/81087809" target="_blank" rel="noopener">https://blog.csdn.net/qq_38950316/article/details/81087809</a></p>
+<h4 id="References"><a href="#References" class="headerlink" title="References"></a>References</h4><p><a href="https://blog.csdn.net/qq_38950316/article/details/81087809" target="_blank" rel="noopener">https://blog.csdn.net/qq_38950316/article/details/81087809</a></p>
 
       
     </div>
@@ -522,7 +522,7 @@
               
 		<a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -544,7 +544,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -593,7 +593,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#“三次握手”的目的："><span class="nav-number">1.</span> <span class="nav-text">“三次握手”的目的：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三次握手"><span class="nav-number">2.</span> <span class="nav-text">三次握手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四次挥手"><span class="nav-number">3.</span> <span class="nav-text">四次挥手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么建立是三次握手，关闭是四次挥手"><span class="nav-number">4.</span> <span class="nav-text">为什么建立是三次握手，关闭是四次挥手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结束连接最后一步为什么等待-2MSL"><span class="nav-number">5.</span> <span class="nav-text">结束连接最后一步为什么等待 2MSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#若建立连接后，客户端突然出现故障"><span class="nav-number">6.</span> <span class="nav-text">若建立连接后，客户端突然出现故障</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#“三次握手”的目的："><span class="nav-number">1.</span> <span class="nav-text">“三次握手”的目的：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三次握手"><span class="nav-number">2.</span> <span class="nav-text">三次握手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四次挥手"><span class="nav-number">3.</span> <span class="nav-text">四次挥手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么建立是三次握手，关闭是四次挥手"><span class="nav-number">4.</span> <span class="nav-text">为什么建立是三次握手，关闭是四次挥手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结束连接最后一步为什么等待-2MSL"><span class="nav-number">5.</span> <span class="nav-text">结束连接最后一步为什么等待 2MSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#若建立连接后，客户端突然出现故障"><span class="nav-number">6.</span> <span class="nav-text">若建立连接后，客户端突然出现故障</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#References"><span class="nav-number">6.0.1.</span> <span class="nav-text">References</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -610,7 +610,7 @@
     	  <h3 class="widget-title">Tag Cloud</h3>
     	  <div id="myCanvasContainer" class="widget tagcloud">
             <canvas width="250" height="250" id="resCanvas" style="width:100%">
-              <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/LDA/" rel="tag">LDA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCA/" rel="tag">PCA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVD/" rel="tag">SVD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/" rel="tag">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/" rel="tag">TCP/IP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UDP/" rel="tag">UDP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/" rel="tag">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a><span class="tag-list-count">1</span></li></ul>
+              <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C4-5/" rel="tag">C4.5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CART/" rel="tag">CART</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DecisionTree/" rel="tag">DecisionTree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gini/" rel="tag">Gini</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ID3/" rel="tag">ID3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LDA/" rel="tag">LDA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCA/" rel="tag">PCA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVD/" rel="tag">SVD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/" rel="tag">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/" rel="tag">TCP/IP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UDP/" rel="tag">UDP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/entropy/" rel="tag">entropy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/" rel="tag">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a><span class="tag-list-count">1</span></li></ul>
       	    </canvas>
     	  </div>
         </div>

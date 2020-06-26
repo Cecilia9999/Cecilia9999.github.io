@@ -106,7 +106,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623142558704.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/23/post/PCA-LDA-SVD/markdown-img-paste-20200623142631407.png">
 <meta property="article:published_time" content="2020-06-23T04:28:25.000Z">
-<meta property="article:modified_time" content="2020-06-23T05:36:50.000Z">
+<meta property="article:modified_time" content="2020-06-26T12:10:02.000Z">
 <meta property="article:author" content="Cecilia Song">
 <meta property="article:tag" content="PCA">
 <meta property="article:tag" content="LDA">
@@ -396,12 +396,12 @@
 <p><img src="markdown-img-paste-20200623133759702.png" alt=""></p>
 <p>多维空间中的 <em>p</em> 个 <em>p</em> 维正交基向量组成的正交基组矩阵 <em>U</em> 为</p>
 <p><img src="markdown-img-paste-20200623133851286.png" alt=""></p>
-<p>PCA 首先将所有样本点中心化（减去均值向量），对于中心化后的样本，假设某一样本   $x^{(i)}  = ( x_{1}^{(i)} ,  x_{2}^{(i)} ,  … ,  x_{p}^{(i)} )^{T}$  ，它沿着某一方向向量 $u^{(j)}  = ( u_{1}^{(j)} ,  u_{2}^{(j)} ,  … ,  u_{p}^{(j)} )^{T}$ 的投影为 $u^{(j) , T}x^{(i)}$ ，如下图所示。</p>
-<p>注意：$u^{(j) , T}x^{(i)} = x^{(i), T} u^{(j)}$ 没有区别，因为投影（数值）就是两个向量的内积。但是在哪个向量上投影，哪个向量就要单位化处理变成单位向量。也就是说只要限制  $u^{(j), T} u^{(j)} = 1$ ，$x^{(i)}$  和 $u^{(j)}$  的内积即为 $x^{(i)}$  在 $u^{(j)}$  上的投影。</p>
+<p>PCA 首先将所有样本点中心化（减去均值向量），对于中心化后的样本，假设某一样本   $x^{(i)}  = ( x_{1}^{(i)} ,  x_{2}^{(i)} ,  … ,  x_{p}^{(i)} )^{T}$  ，它沿着某一方向向量 $u^{(j)}  = ( u_{1}^{(j)} ,  u_{2}^{(j)} ,  … ,  u_{p}^{(j)} )^{T}$ 的投影为 $u^{(j) T}x^{(i)}$ ，如下图所示。</p>
+<p>注意：$u^{(j) , T}x^{(i)} = x^{(i) T} u^{(j)}$ 没有区别，因为投影（数值）就是两个向量的内积。但是在哪个向量上投影，哪个向量就要单位化处理变成单位向量。也就是说只要限制  $u^{(j)  T} u^{(j)} = 1$ ，$x^{(i)}$  和 $u^{(j)}$  的内积即为 $x^{(i)}$  在 $u^{(j)}$  上的投影。</p>
 <p><img src="markdown-img-paste-2020062313443141.png" alt=""></p>
 <p>所有样本在这一方向（正交基向量）上的投影方差为</p>
 <p><img src="markdown-img-paste-20200623134450684.png" alt=""></p>
-<p>其中，正交基和正交基组满足约束条件 $u^{(j), T} u^{(j)} = 1$。再看某一样本在各方向向量，即正交基组上的投影为 $U^{ T} x^{(i)}$ （投影值组成的向量）</p>
+<p>其中，正交基和正交基组满足约束条件 $u^{(j) T} u^{(j)} = 1$。再看某一样本在各方向向量，即正交基组上的投影为 $U^{ T} x^{(i)}$ （投影值组成的向量）</p>
 <p><img src="markdown-img-paste-20200623134617738.png" alt=""></p>
 <p>则上述投影得到投影方差为</p>
 <p><img src="markdown-img-paste-20200623134714274.png" alt=""></p>
@@ -435,10 +435,10 @@
 <p><img src="markdown-img-paste-20200623140106609.png" alt=""></p>
 <p>先看二分类 LDA 降维。假设样本集合 𝐷 = ( (x<sup>(1)</sup>,  y<sup>(1)</sup>) ,  (x<sup>(2)</sup> ,  y<sup>(2)</sup>) , … ,   (x<sup>(n)</sup> ,  y<sup>(n)</sup>) )，其中 x<sup>(n)</sup> ∊ ℝ<sup>p</sup> ，𝑦x<sup>(n)</sup> ∊ {0, 1}。定义第 <em>j</em> 类样本的均值向量和类内方差（这里 Σ<sup><em>j</em></sup> 去掉了 1 / n 系数）为</p>
 <p><img src="markdown-img-paste-20200623140306254.png" alt=""></p>
-<p>LDA 要找到一个方向向量 u (k) ，将数据投影在这个向量上，使得类间投影的距离尽可能大，同时类内投影方差尽可能小。某个样本 x (i) 在 u (k) 方向上的投影值为 $u^{(k),T}x^{(i)}$ （或  $x^{(i),T}u^{(k)}$ ），约束 $u^{(k),T}u^{(k)} = 1$。则有</p>
+<p>LDA 要找到一个方向向量 $u^{(k)}$ ，将数据投影在这个向量上，使得类间投影的距离尽可能大，同时类内投影方差尽可能小。某个样本 $x^{(i)}$ 在 $u^{(k)}$ 方向上的投影值为 $u^{(k) T}x^{(i)}$ （或  $x^{(i) T}u^{(k)}$ ），约束 $u^{(k) T}u^{(k)} = 1$。则有</p>
 <ul>
-<li>（<strong>类间计算</strong>）类间投影用各类中心点 $\bar{x}<em>{j}$ 的投影  $u^{(k),T}\bar{x}</em>{j}$ ，并计算两类样本的中心点投影的差值的二范数。</li>
-<li>（<strong>类内计算</strong>）所有样本在所属类的投影方差（见 PCA 计算）为 $u^{(k),T} X^{T} X  u^{(k)}$，并计算两类方差之和。</li>
+<li>（<strong>类间计算</strong>）类间投影用各类中心点 $\bar{x}<em>{j}$ 的投影  $u^{(k) T}\bar{x}</em>{j}$ ，并计算两类样本的中心点投影的差值的二范数。</li>
+<li>（<strong>类内计算</strong>）所有样本在所属类的投影方差（见 PCA 计算）为 $u^{(k) T} X^{T} X  u^{(k)}$，并计算两类方差之和。</li>
 </ul>
 <p>则优化目标可以写成类间方差与类内方差的比值的最大化</p>
 <p><img src="markdown-img-paste-20200623141025217.png" alt=""></p>
@@ -492,7 +492,7 @@
 <p><img src="markdown-img-paste-20200623142631407.png" alt=""></p>
 <p>开头说到 PCA 降维，需要找到样本协方差矩阵 <em>X</em><sup>T</sup><em>X</em>  的最大的 <em>k</em> 个特征向量，组成低维正交基组来做降维。而 SVD 也可以找到样本协方差矩阵 <em>X</em><sup>T</sup><em>X</em>  的最大的 <em>k</em> 个特征向量，并且不用计算协方差矩阵，而是取 SVD 分解后的右奇异矩阵 <em>V</em><sub>n</sub> × <em>k</em> 的前 <em>k</em> 列向量组成低维正交基组，达到降维目的。</p>
 <p>注：<strong>左奇异矩阵可以用于行数的压缩</strong> ；<strong>右奇异矩阵可以用于列数即特征的压缩</strong>，即 PCA 降维。　　</p>
-<p><strong>Reference</strong><br><a href="https://www.cnblogs.com/pinard/p/6244265.html" target="_blank" rel="noopener">https://www.cnblogs.com/pinard/p/6244265.html</a><br><a href="https://www.cnblogs.com/jerrylead/archive/2011/04/18/2020216.html" target="_blank" rel="noopener">https://www.cnblogs.com/jerrylead/archive/2011/04/18/2020216.html</a><br><a href="https://www.cnblogs.com/guoyaohua/p/8855636.html" target="_blank" rel="noopener">https://www.cnblogs.com/guoyaohua/p/8855636.html</a><br><a href="https://www.cnblogs.com/pinard/p/6251584.html" target="_blank" rel="noopener">https://www.cnblogs.com/pinard/p/6251584.html</a></p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p><a href="https://www.cnblogs.com/pinard/p/6244265.html" target="_blank" rel="noopener">https://www.cnblogs.com/pinard/p/6244265.html</a><br><a href="https://www.cnblogs.com/jerrylead/archive/2011/04/18/2020216.html" target="_blank" rel="noopener">https://www.cnblogs.com/jerrylead/archive/2011/04/18/2020216.html</a><br><a href="https://www.cnblogs.com/guoyaohua/p/8855636.html" target="_blank" rel="noopener">https://www.cnblogs.com/guoyaohua/p/8855636.html</a><br><a href="https://www.cnblogs.com/pinard/p/6251584.html" target="_blank" rel="noopener">https://www.cnblogs.com/pinard/p/6251584.html</a></p>
 
       
     </div>
@@ -554,6 +554,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/26/post/DT/" rel="prev" title="DT">
+                DT <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -636,7 +640,7 @@
               
 		<a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -658,7 +662,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -707,7 +711,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#无监督学习-PCA-降维"><span class="nav-number">1.</span> <span class="nav-text">无监督学习 PCA 降维</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于最大投影方差推导"><span class="nav-number">1.1.</span> <span class="nav-text">基于最大投影方差推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PCA-具体计算步骤"><span class="nav-number">1.2.</span> <span class="nav-text">PCA 具体计算步骤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#监督学习-LDA-降维"><span class="nav-number">2.</span> <span class="nav-text">监督学习 LDA 降维</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LDA-具体计算步骤"><span class="nav-number">2.1.</span> <span class="nav-text">LDA 具体计算步骤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LDA-和-PCA-比较"><span class="nav-number">3.</span> <span class="nav-text">LDA 和 PCA 比较</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#无监督学习-PCA-降维"><span class="nav-number">1.</span> <span class="nav-text">无监督学习 PCA 降维</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于最大投影方差推导"><span class="nav-number">1.1.</span> <span class="nav-text">基于最大投影方差推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PCA-具体计算步骤"><span class="nav-number">1.2.</span> <span class="nav-text">PCA 具体计算步骤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#监督学习-LDA-降维"><span class="nav-number">2.</span> <span class="nav-text">监督学习 LDA 降维</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LDA-具体计算步骤"><span class="nav-number">2.1.</span> <span class="nav-text">LDA 具体计算步骤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LDA-和-PCA-比较"><span class="nav-number">3.</span> <span class="nav-text">LDA 和 PCA 比较</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Reference"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -724,7 +728,7 @@
     	  <h3 class="widget-title">Tag Cloud</h3>
     	  <div id="myCanvasContainer" class="widget tagcloud">
             <canvas width="250" height="250" id="resCanvas" style="width:100%">
-              <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/LDA/" rel="tag">LDA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCA/" rel="tag">PCA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVD/" rel="tag">SVD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/" rel="tag">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/" rel="tag">TCP/IP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UDP/" rel="tag">UDP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/" rel="tag">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a><span class="tag-list-count">1</span></li></ul>
+              <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C4-5/" rel="tag">C4.5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CART/" rel="tag">CART</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DecisionTree/" rel="tag">DecisionTree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gini/" rel="tag">Gini</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ID3/" rel="tag">ID3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LDA/" rel="tag">LDA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCA/" rel="tag">PCA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVD/" rel="tag">SVD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/" rel="tag">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/" rel="tag">TCP/IP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UDP/" rel="tag">UDP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/entropy/" rel="tag">entropy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/" rel="tag">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a><span class="tag-list-count">1</span></li></ul>
       	    </canvas>
     	  </div>
         </div>
