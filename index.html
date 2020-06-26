@@ -259,6 +259,398 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/26/post/Ensemble/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cecilia Song">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/selficon.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="To be a developer">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/26/post/Ensemble/" itemprop="url">集成学习（Ensemble）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-26T21:26:00+09:00">
+                2020-06-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">machine learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>集成学习（ensemble learning）主要分为 Bagging 和 Boosting 两种。</p>
+<p>1）Bagging —— 民主投票<br>Bagging 的思路是所有基础模型都一致对待，每个基础模型手里都只有一票。然后使用民主投票的方式得到最终的结果。大部分情况下，经过 Bagging 得到的结果方差（Variance）更小。</p>
+<p>2）Boosting —— 挑选精英<br>Boosting 和 Bagging 最本质的差别在于他对基础模型不是一致对待的，而是经过不停的考验和筛选来选出“精英模型”，然后给“精英模型”更多的投票权，对于表现不好的基础模型则给较少的投票权，然后综合所有人的投票得到最终结果。大部分情况下，经过 Boosting 得到的结果偏差（Bias）更小。</p>
+<h3 id="偏差（Bias）和-方差（Variance）"><a href="#偏差（Bias）和-方差（Variance）" class="headerlink" title="偏差（Bias）和 方差（Variance）"></a>偏差（Bias）和 方差（Variance）</h3><ul>
+<li><strong>方差</strong> 度量了不同训练集（样本数相同）所产生的模型性能的变化。刻画了<strong>模型（对数据扰动）的稳定性</strong>。</li>
+<li><strong>偏差</strong> 度量了该模型的期望预测与真实结果的偏离程度。刻画了<strong>模型本身的拟合能力</strong>。</li>
+</ul>
+<p>为了使模型泛化性好，偏差和方差都要尽可能的<strong>小</strong>，模型能充分拟合数据并且应对数据扰动较为稳定。通常，正确选择模型的复杂度可以减小偏差和方差影响。</p>
+<ul>
+<li><strong>模型复杂度太低，容易欠拟合，模型偏差太大</strong>。</li>
+<li><strong>模型复杂度太高，容易过拟合，模型方差太大</strong>。</li>
+</ul>
+<p>其实，<strong>减小偏差、方差的思路分别对应避免欠拟合、过拟合</strong>的思路。</p>
+<p><img src="markdown-img-paste-20200626213434185.png" alt=""></p>
+<p>上图可知，模型的偏差、方差随模型复杂度的增加分别单调递减、递增，而误差则先减后增。</p>
+<h3 id="从-Bias-Variance-角度看两类集成学习"><a href="#从-Bias-Variance-角度看两类集成学习" class="headerlink" title="从 Bias - Variance 角度看两类集成学习"></a>从 Bias - Variance 角度看两类集成学习</h3><p><strong>1. Bagging 主要关注降低 Variance</strong></p>
+<p>不同的训练集（数据量相同）训练出不同的基模型，所以各自拟合能力都差不多，即偏差都差不多。投票平均后的模型偏差比较平均，<strong>方差会降低</strong>，相当于总模型是由不同份的训练集训练的。所以为了防止方差过低导致的欠拟合，每个基模型的复杂度要尽可能高（如：增加每棵决策树的深度）。</p>
+<p><strong>2. Boosting 主要关注降低 Bias</strong></p>
+<p>层层递进的超级学习者，基模型的拟合能力不断地变强，<strong>偏差会降低</strong>。由于训练数据始终是同一份，所以方差不会有太大变化。所以为了防止偏差过低导致的过拟合，基模型的复杂度要尽可能低（如每颗决策树只取树桩）。</p>
+<h3 id="Bagging-和-Boosting-区别"><a href="#Bagging-和-Boosting-区别" class="headerlink" title="Bagging 和 Boosting 区别"></a>Bagging 和 Boosting 区别</h3><p><strong>1）样本选择上</strong>：<br>Bagging：训练集是在原始集中有放回选取的，从原始集中选出的各轮训练集之间是独立的。<br>Boosting：每一轮的训练集不变，只是训练集中每个样例在分类器中的权重发生变化。而权值是根据上一轮的分类结果进行调整。</p>
+<p><strong>2）样例权重</strong>:<br>Bagging：使用均匀取样，每个样例的权重相等<br>Boosting：根据错误率不断调整样例的权值，错误率越大则权重越大。</p>
+<p><strong>3）预测函数</strong>:<br>Bagging：所有预测函数的权重相等。<br>Boosting：每个弱分类器都有相应的权重，对于分类误差小的分类器会有更大的权重。</p>
+<p><strong>4）并行计算</strong>：<br>Bagging：各个预测函数可以并行生成<br>Boosting：各个预测函数只能顺序生成，因为后一个模型参数需要前一轮模型的结果。</p>
+<h1 id="Bagging"><a href="#Bagging" class="headerlink" title="Bagging"></a>Bagging</h1><p>Bagging 是一种并行式的集成学习方法，多个基模型的训练之间无前后顺序，无依赖，可以同时进行。</p>
+<p><img src="markdown-img-paste-2020062621431496.png" alt=""></p>
+<p>由上图可知，Bagging 是将多个基模型组合进行预测，其中每个基模型都需要一份数据去训练。Bagging 又被称作 <strong>Bootstrap Aggregating</strong> ，主要有两个核心问题：</p>
+<ul>
+<li>通常我们只有一份有限的数据，如何利用它产生多份“新数据”呢？（<strong>Bootstrap 抽样</strong>）</li>
+<li>预测时如何使用训练出的多个模型？（<strong>Aggregating 预测</strong>）</li>
+</ul>
+<h3 id="Bootstrap-抽样"><a href="#Bootstrap-抽样" class="headerlink" title="Bootstrap 抽样"></a>Bootstrap 抽样</h3><p>在已有的数据集上通过“有放回”采样构造出多个新数据集。具体：有包含 <em>N</em> 个数据的训练集 <em>D</em>，现在要构造出 <em>k</em> 个新训练集 { <em>D</em><sub>1</sub> , … , <em>D</em><sub><em>k</em></sub> } 。对于每个新训练集 <em>D</em><sub><em>i</em></sub> ，都是从原有训练集 <em>D</em> 中有放回地采样 <em>N</em> 次得到 <em>N</em> 个数据。因为是有放回的随机采样，这 <em>k</em> 个新训练集是相互独立的。<br>另外可以算出，对于一份训练集，某个数据没被采样过的概率：（对于一份新训练集，<em>N</em> 次有放回采样中，某数据被选中的概率 1/<em>N</em>，没被选中则为 1 - 1/<em>N</em>）</p>
+<p><img src="markdown-img-paste-20200626214609142.png" alt=""></p>
+<p>由此可知每份训练集有 36.8 % （～1/3）的数据没被抽到过。</p>
+<h3 id="Aggregating-预测"><a href="#Aggregating-预测" class="headerlink" title="Aggregating 预测"></a>Aggregating 预测</h3><p>通过上述的抽样法可以得到多份训练集，每次使用一份训练一个模型，<em>k</em> 个训练集共得到 <em>k</em> 个基模型。利用这 <em>k</em> 个基模型对测试集进行预测，将 <em>k</em> 个预测结果进行聚合（aggregation）。聚合通常分为两种情况：</p>
+<ul>
+<li>分类问题：将上步得到的 <em>k</em> 个模型采用投票的方式得到分类结果</li>
+<li>回归问题：计算上述模型的均值作为最后的结果。（所有模型的重要性相同）</li>
+</ul>
+<p>Bagging 主要降低不同模型的 Variance，对 Bias 无明显作用。因此，适用于 High Variance &amp; Low Bias 的模型，例如决策树（每次切割方式都不同，且训练集不断减少导致模型对数据比较敏感，因此方差大）。</p>
+<h3 id="Out-of-Bag（OOB）误差"><a href="#Out-of-Bag（OOB）误差" class="headerlink" title="Out-of-Bag（OOB）误差"></a>Out-of-Bag（OOB）误差</h3><p>Bagging 最大的优势是我们可以不通过交叉验证而求得测试误差。平均而言，每个基模型使用了 2/3 的训练集，而剩下 1/3 的没被用于训练的样本就可以称为 out-of-bag (OOB) 样本。在 validation 中，使用验证集可以检测单个模型的性能，而在 Bagging 需要检测的是多个基模型组合而成的模型的性能。具体做法：</p>
+<p>1. 对于每个样本，先看看它在哪些训练集上（约1/3训练集）是作为 OOB 样本，用这些训练集得到的基模型组合成一个 “小 Bagging” 对该样本进行预测（以多数投票作为该样本的分类结果）；</p>
+<p>2. 得到的预测误差（误分个数占样本总数的比率）记为该 “小 Bagging” 的预测误差 <em>err</em><sub><em>i</em></sub> ；</p>
+<p>3. 计算每个数据作为 OOB 样本时的预测误差，求和再求平均，即为整个 Bagging 的预测误差 <em>E</em><sub><em>OOB</em></sub><br><img src="markdown-img-paste-20200626214916352.png" alt=""></p>
+<p>例如，如下图所示的 Bagging 有5个基模型，样本集合有中 N 个数据。数据 2 在基模型 2～5 上都没有被选中，所以是它们的 OOB 样本，因此数据 2 的预测误差 <em>err</em><sub>2</sub> 由基模型 2～5 组合计算。数据 5 是基模型 2 和 5 的 OOB 样本，其预测误差由这两个基模型组合得到 <em>err</em><sub>5</sub> 。最后求所有数据的预测误差之和的平均。</p>
+<p><img src="markdown-img-paste-20200626215000117.png" alt=""></p>
+<p>通常称 OOB Err 为 Bagging 的 Self-Validation，是一种无偏估计。相较于原来的 Validation 省去了多次训练的步骤。</p>
+<h1 id="随机森林（Radom-Forest-RF）"><a href="#随机森林（Radom-Forest-RF）" class="headerlink" title="随机森林（Radom Forest, RF）"></a>随机森林（Radom Forest, RF）</h1><p><strong>Bagging + Decision Tree = Radom Forest</strong></p>
+<p>随机森林是 Bagging 算法的一个特例进阶版。特例是因为基模型是 Decision Tree，进阶是因为在 Bagging 的样本随机采样基础上，加上了特征的随机选择。</p>
+<h2 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h2><ol>
+<li><strong>样本采样</strong>：<br>确定树模型的数量。每棵树的训练集是通过 Bootstrap 抽样所得。即原样本中有 2/3 的数据用于训练树，另 1/3 的数据会作为该树模型的 OOB 样本。</li>
+<li><strong>特征选取</strong>：训练每棵树模型时，每次树分裂时都要进行随机特征选取。假设特征维度为 <em>M</em>，需要指定一个常数 <em>m</em>（<em>m</em> &lt; <em>M</em>），然后随机地从 <em>M</em> 个特征中选取具有 <em>m</em> 个特征的特征子集，每次树进行分裂时，从这 <em>m</em> 个特征中选择最优的作为划分特征。</li>
+<li><strong>预测</strong>：每棵树都有一个预测值，对于分类问题，基于多数投票法得到预测结果；对于回归问题，取所有基模型输出的平均值。<br>此外，随机森林中的每棵树都尽可能最大程度地生长，并且没有剪枝过程。</li>
+</ol>
+<h2 id="特征选取"><a href="#特征选取" class="headerlink" title="特征选取"></a>特征选取</h2><p>随机森林的模型性能（错误率）与以下两个因素有关：</p>
+<ul>
+<li>森林中任意两棵树的相关性：相关性越大，模型的性能越弱（错误率越高）</li>
+<li>森林中每棵树的分类能力：每棵树模型的性能越强，整个森林的错误率越低<br>减小特征选取的个数 <em>m</em> ，树的相关性和预测性能也会相应的降低。所以关键问题是如何选择最优的 <em>m</em>（或者是范围）。</li>
+</ul>
+<h2 id="特征的重要性"><a href="#特征的重要性" class="headerlink" title="特征的重要性"></a>特征的重要性</h2><p>对于某一特征，如果用另外一个随机值替代它的取值之后，模型的的表现比之前更差，则表明该特征比较重要，不能随便替换。相反，如果替代前后差别不大，则该特征没那么重要。</p>
+<p>所以，我们可以通过 OOB 样本去计算特征的重要性。<br>首先计算 OOB 误差 <em>E</em><sub><em>OOB</em></sub><br>假设要知道第 <em>i</em> 个特征的重要性，将所有数据中的第 <em>i</em> 个特征的取值重新洗牌，再计算 OOB 误差 <em>E</em><sub><em>OOB</em></sub><sup> (<em>p</em>)</sup><br>第 <em>i</em> 个特征的重要性 = | <em>E</em><sub><em>OOB</em></sub> -  <em>E</em><sub><em>OOB</em></sub><sup> (<em>p</em>)</sup>）|</p>
+<p><img src="markdown-img-paste-20200626215539391.png" alt=""></p>
+<p>例如，上图中若要计算第 2 个特征的重要性，将 <em>N</em> 个样本的第 2 个特征取值全部洗牌，再计算当前洗牌后的 OOB 误差，再和洗牌前的误差相比，变化越大说明该特征越重要。<br>因此，<strong>特征选择</strong>的步骤如下：</p>
+<p>1）计算每个特征的重要性，并按降序排序<br>2）确定要剔除的比例，依据特征重要性剔除相应比例的特征，得到一个新的特征集<br>3）用新的特征集重复上述过程，直到剩下 <em>m</em> 个特征（<em>m</em> 为提前设定的值）。<br>4）根据上述过程中得到的各个特征集和特征集对应的 OOB 误差，选择 OOB 误差最低的特征集</p>
+<h1 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h1><p>Boosting 是一种串行的工作机制，即个体学习器的训练存在依赖关系，必须逐步序列化进行。Boosting 算法框架是由加法模型和前向分步算法构成。其中，加法模型（K 个基模型加权组成）</p>
+<p><img src="markdown-img-paste-20200626215723744.png" alt=""></p>
+<p>给定损失函数时，加法模型对应的优化目标较为复杂</p>
+<p><img src="markdown-img-paste-20200626215736610.png" alt=""></p>
+<p>前向分布算法简化了上述优化目标，即每一步只学习一个基函数及其系数，逐步逼近最终的加法模型，这样每步也就只需要优化本轮的损失函数</p>
+<p><img src="markdown-img-paste-20200626215751770.png" alt=""></p>
+<p>前向分步算法将同时求解从 k = 1 ~ K 的所有参数 <em>β</em><sub><em>k</em></sub> ， <em>γ</em><sub><em>k</em></sub>  的优化问题简化为逐次求解各个 <em>β</em><sub><em>k</em></sub> ， <em>γ</em><sub><em>k</em></sub> 的优化问题（每轮通过最小化损失函数更新模型的相关参数，用于下一轮计算）。</p>
+<p>Boosting 中 <strong>AdaBoost 和 提升树（Boosting Tree）系列</strong> 算法最具代表。</p>
+<ul>
+<li>Adaboost = Boosting + 损失函数是指数函数（基模型任意）</li>
+<li>提升树 = Boosting + 基模型是决策树（损失函数任意）</li>
+</ul>
+<p>其中提升树模型主要有</p>
+<ul>
+<li>BDT：二叉分类树 + 指数损失（加权学习），等价于 Adaboost 当基模型是二叉分类树</li>
+<li>BRT：二叉回归树 + 平方误差损失（计算残差，其实也是负梯度）</li>
+<li>GBDT：二叉分类树 + 普通损失函数（计算负梯度）</li>
+<li>GBRT：二叉回归树 + 普通损失函数（计算负梯度）</li>
+</ul>
+<p>如果把 GBRT 的损失函数选为平方误差损失，则退化为 BRT，因为平方损失函数的负梯度就是残差。</p>
+<p><img src="markdown-img-paste-20200626220024389.png" alt=""></p>
+<h1 id="AdaBoost"><a href="#AdaBoost" class="headerlink" title="AdaBoost"></a>AdaBoost</h1><h3 id="大致流程"><a href="#大致流程" class="headerlink" title="大致流程"></a>大致流程</h3><ol>
+<li>每轮训练改变基模型的权重。提高那些错误率小的基模型的权重，减小错误率高的基模型的权重</li>
+<li>每轮训练改变训练数据的权值或概率分布。提高那些前一轮的误分数据的权值，减小前一轮正确分类的数据的权值，从而加强模型对误分数据的预测性能（下一轮将更注重对误分数据的纠正）</li>
+<li>通过加法模型将基模型进行线性的组合</li>
+</ol>
+<h3 id="核心问题"><a href="#核心问题" class="headerlink" title="核心问题"></a>核心问题</h3><ol>
+<li>如何计算学习误差率 <em>e</em></li>
+<li>如何得到弱学习器权重系数 <em>α</em></li>
+<li>如何更新样本权重 <em>D</em></li>
+<li>使用何种结合策略</li>
+</ol>
+<h2 id="具体计算步骤"><a href="#具体计算步骤" class="headerlink" title="具体计算步骤"></a>具体计算步骤</h2><p>给定包含 <em>N</em> 个数据的训练集 <em>T</em> = { ( x<sup>(1)</sup> ,  y<sup>(1)</sup> ) ,  ( x<sup>(2)</sup> ,  y<sup>(2)</sup> ) , … ,   ( x<sup>(n)</sup> ,  y<sup>(n)</sup> ) }，标签为 $y_{i} \in {-1, 1}$。</p>
+<p><strong>1）</strong> 初始化训练集的权重。其中每个数据最开始时都被赋予相同的权值：1 / <em>N</em> 。</p>
+<p><img src="markdown-img-paste-20200626220533102.png" alt=""></p>
+<p><strong>2）</strong> 进行多轮迭代，迭代次数用 <em>m</em> = 1，2，…，<em>M</em> 表示。</p>
+<p>（a）使用具有权值分布为 Wm 的训练数据集学习，得到该轮的基模型 <em>G</em><sub><em>m</em></sub> 并计算其误差率 <em>e</em><sub><em>m</em></sub>（该轮模型在训练集上得到的误分类数据的权值和）</p>
+<p><img src="markdown-img-paste-20200626220631424.png" alt=""></p>
+<p>（b）计算基模型 <em>G</em><sub><em>m</em></sub> 的权重系数（在最终模型中所占比重）</p>
+<p><img src="markdown-img-paste-20200626220728494.png" alt=""></p>
+<p>由上式可知，<em>e</em><sub><em>m</em></sub> ≤ 1/2 时，<em>α</em><sub><em>m</em></sub> ≥ 0，且误差率 <em>e</em><sub><em>m</em></sub> 越小，该轮基模型的权重 <em>α</em><sub><em>m</em></sub> 则越大。</p>
+<p>（c）更新训练集的权重，用于下一轮训练。</p>
+<p><img src="markdown-img-paste-20200626220843292.png" alt=""></p>
+<p>其中，每个数据的权重为</p>
+<p><img src="markdown-img-paste-20200626220903379.png" alt=""></p>
+<p><em>Z</em><sub><em>m</em></sub> 是所有数据权重之和，即规范化因子（使得 <em>W</em> 成为训练集的概率分布）</p>
+<p><strong>3）</strong> 重复步骤 2），得到 <em>M</em> 个基模型以及对应模型的权重 <em>α</em><sub><em>m</em></sub> ，组合这些基模型</p>
+<p><img src="markdown-img-paste-2020062622103555.png" alt=""></p>
+<p>最终的分类模型为</p>
+<p><img src="markdown-img-paste-20200626221042652.png" alt=""></p>
+<p>那么，如何得到基模型的权重 <em>α</em><sub><em>m</em></sub> 和每轮更新的数据权重 <em>w</em><sub><em>m</em></sub> + 1 ,  <em>i</em>  的计算公式呢？</p>
+<h2 id="权重更新公式具体推导"><a href="#权重更新公式具体推导" class="headerlink" title="权重更新公式具体推导"></a>权重更新公式具体推导</h2><p>首先，AdaBoost 算法使用加法模型，损失函数为指数函数，学习算法使用前向分步算法（每一轮训练的新模型是基于上一轮的模型）。AdaBoost 中的加法模型</p>
+<p><img src="markdown-img-paste-2020062622124563.png" alt=""></p>
+<p>前向分步算法的损失函数为指数函数</p>
+<p><img src="markdown-img-paste-20200626221251673.png" alt=""></p>
+<p>训练目标是每轮迭代过程中将当前基模型在训练集上的损失函数最小化（前向分步算法的特点）</p>
+<p><img src="markdown-img-paste-20200626221300868.png" alt=""></p>
+<p>由于前向分步算法可知当前第 m 轮的基模型与前 m-1 轮的基模型的关系</p>
+<p><img src="markdown-img-paste-20200626221307508.png" alt=""></p>
+<p>因此，最小化目标写为</p>
+<p><img src="markdown-img-paste-20200626221314827.png" alt=""></p>
+<p>将上式进一步转换，令</p>
+<p><img src="markdown-img-paste-20200626221322858.png" alt=""></p>
+<p>则有</p>
+<p><img src="markdown-img-paste-20200626221340427.png" alt=""></p>
+<p>接下来对上式求 <em>α</em><sub><em>m</em></sub> 的偏导令为 0</p>
+<p><img src="markdown-img-paste-20200626221419366.png" alt=""></p>
+<p>得到参数 <em>α</em><sub><em>m</em></sub> 为</p>
+<p><img src="markdown-img-paste-20200626221848190.png" alt=""></p>
+<p>其中，误分率 <em>e</em><sub><em>m</em></sub></p>
+<p><img src="markdown-img-paste-20200626221938774.png" alt=""></p>
+<p>结合<img src="markdown-img-paste-20200626222027529.png" alt="">，得到</p>
+<p><img src="markdown-img-paste-20200626222044315.png" alt=""></p>
+<p>写成规范化形式后</p>
+<p><img src="markdown-img-paste-20200626222111408.png" alt=""><br>参数 w<sub><em>m</em>+1, <em>i</em></sub> 求解完毕</p>
+<h2 id="AdaBoost-的训练误差界"><a href="#AdaBoost-的训练误差界" class="headerlink" title="AdaBoost 的训练误差界"></a>AdaBoost 的训练误差界</h2><p>AdaBoost 算法能在学习过程中不断减少训练误差（在训练数据集上的误分率），其训练误差界由下式保证</p>
+<p><img src="markdown-img-paste-20200626222335132.png" alt=""></p>
+<h3 id="证明过程"><a href="#证明过程" class="headerlink" title="证明过程"></a>证明过程</h3><p>1）<img src="markdown-img-paste-20200626222556482.png" alt=""><br>上式前半部分（不等式）得证。</p>
+<p>2）后半部分等式证明如下：</p>
+<p><img src="markdown-img-paste-20200626222612358.png" alt=""></p>
+<p>其中，用到下面两个变换</p>
+<p><img src="markdown-img-paste-20200626222713227.png" alt=""></p>
+<p>对于二分类问题，进一步的 AdaBoost 的训练误差上界</p>
+<p><img src="markdown-img-paste-20200626222727971.png" alt=""></p>
+<p>其中，<img src="markdown-img-paste-20200626222757312.png" alt=""></p>
+<p>对于 Adaboost 多元分类算法，原理和二元分类类似，最主要区别在基模型的权重系数上。比如 Adaboost  SAMME 算法，其基模型的权重</p>
+<p><img src="markdown-img-paste-20200626222814842.png" alt=""></p>
+<p>其中 R 为类别数。当二元分类时，R = 2，则与常规 AdaBoost 算法的权重公式一致。</p>
+<h2 id="AdaBoost-回归"><a href="#AdaBoost-回归" class="headerlink" title="AdaBoost 回归"></a>AdaBoost 回归</h2><p><img src="markdown-img-paste-20200626223121794.png" alt=""></p>
+<h2 id="AdaBoost-正则化"><a href="#AdaBoost-正则化" class="headerlink" title="AdaBoost 正则化"></a>AdaBoost 正则化</h2><p>将加法模型中每轮的基模型前乘上一个步长 <em>v</em></p>
+<p><img src="markdown-img-paste-20200626223242227.png" alt=""></p>
+<p>其中，<em>v</em> 的取值范围为 0 &lt; <em>v</em> ≤ 1。较小的 <em>v</em> 意味着我们需要更多的基模型或迭代次数。通常我们用步长和迭代最大次数一起来决定算法的拟合效果。</p>
+<h2 id="AdaBoost-总结"><a href="#AdaBoost-总结" class="headerlink" title="AdaBoost 总结"></a>AdaBoost 总结</h2><p>理论上任何学习器都可以用于 AdaBoost。但使用最广泛的 AdaBoost 基模型是决策树和神经网络。对于决策树，AdaBoost 分类用了 CART 分类树，而 AdaBoost 回归用了 CART 回归树。</p>
+<p><strong>优点</strong><br>Adaboost作为分类器时，分类精度很高，构造简单，不容易过拟合。</p>
+<p><strong>缺点</strong><br>对异常点敏感：指数损失存在的一个问题是不断增加误分类样本的权重（指数上升）。如果数据样本是异常点（outlier），会极大的干扰后面基本分类器学习效果；<br>模型无法用于概率估计（对于分类问题，模型中的指数形式不属于任意一种概率密度形式）</p>
+<h1 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h1><p>AdaBoost 算法是更新训练集的权重（最小化指数损失函数得到的结果）进行下一轮迭代。GBDT 也是迭代计算，使用了前向分步算法，但是<strong>基模型限定了使用 CART 回归树模型</strong>，每轮迭代的目标是找到一个 CART 回归树基模型使得本轮的损失最小。GBDT 中<strong>用损失函数的负梯度来拟合本轮损失的近似值</strong>，进而拟合一个 CART 回归树。GBDT 是由提升树发展而来，先看看什么是提升树。</p>
+<h2 id="提升树（Boosting-Tree）"><a href="#提升树（Boosting-Tree）" class="headerlink" title="提升树（Boosting Tree）"></a>提升树（Boosting Tree）</h2><p>提升树的思想就是每轮建立一个基模型来拟合最终模型未完全拟合的真实样本的残差。</p>
+<p>举个例子：假如有个人30岁，我们首先用20岁去拟合，发现损失有10岁，这时我们用6岁去拟合剩下的损失，发现差距还有4岁，第三轮我们用3岁拟合剩下的差距，差距就只有一岁了。如果我们的迭代轮数还没有完，可以继续迭代下面，每一轮迭代，拟合的岁数误差都会减小。</p>
+<p>提升树模型是以二叉（CART）树为基模型，采用加法模型（即基模型的线性组合）得到</p>
+<p><img src="markdown-img-paste-2020062622374284.png" alt=""></p>
+<p>利用前向分步算法，基于前一轮的模型计算本轮迭代的模型</p>
+<p><img src="markdown-img-paste-20200626223748912.png" alt=""></p>
+<p>通过最小化损失函数来决定本轮基模型的参数</p>
+<p><img src="markdown-img-paste-20200626223754836.png" alt=""></p>
+<p>不同问题的提升树学习算法，其主要区别在于损失函数不同。例如，当提升树算法处理二分类问题（使用指数损失函数），相当于 AdaBoost 算法基模型是 CART 分类树时。下面再讲一下回归问题。</p>
+<p>对于训练集 <img src="markdown-img-paste-20200626223825554.png" alt=""><br>若将输入空间 𝜒 划分成 <em>J</em> 个互不相交的区域 { <em>R</em><sub>1</sub>，<em>R</em><sub>2</sub>，⋯，<em>R</em><sub><em>J</em></sub> } ，并且在每个区域上确定输出的常量 <em>c</em><sub><em>j</em></sub> ，那么基（树）模型可以表示为：</p>
+<p><img src="markdown-img-paste-20200626223958573.png" alt=""></p>
+<p>其中，<em>J</em> 为叶节点个数（表现了单棵树的复杂度），树的参数则为 <img src="markdown-img-paste-20200626224037500.png" alt="">。树的参数则是我们每轮训练需要求解的。</p>
+<h3 id="具体步骤"><a href="#具体步骤" class="headerlink" title="具体步骤"></a>具体步骤</h3><p><img src="markdown-img-paste-20200626224106124.png" alt=""></p>
+<p><strong>拟合残差</strong>：计算每个数据 x 的残差值，并作为本轮新的训练集的标签值，去训练本轮的基树模型。</p>
+<p>提升树算法每轮都要拟合真实值与预测值的残差，而这是因为当损失函数为平方损失时，对优化目标求一阶导数后恰好为残差。我们的优化目标一直是损失函数（无论带正则与否）最小化，<strong>对于任意损失函数，其负梯度才是最佳优化方向</strong>，<strong>每轮中需要拟合的应为损失函数的负梯度值</strong>，即梯度提升算法的思想。</p>
+<h2 id="梯度提升（Gradient-Boosting）"><a href="#梯度提升（Gradient-Boosting）" class="headerlink" title="梯度提升（Gradient Boosting）"></a>梯度提升（Gradient Boosting）</h2><p><strong>核心思想：提升树中计算残差的公式 ⇒ 用损失函数负梯度求近似残差的公式</strong></p>
+<p><img src="markdown-img-paste-20200626224253194.png" alt=""><br>这样，残差的计算不再依赖于损失函数的形式，该算法更加具有通用性。其实，梯度提升算法和梯度下降法的思路相似：优化目标都是损失函数最小化，梯度提升中优化的是函数 $f(x)$ ，每轮得到的函数增量要去拟合这些负梯度值（训练新的基模型），然后更新模型（相当于最终模型又朝着最优方向迈进一步）。</p>
+<ul>
+<li>传统梯度下降法：在参数空间进行搜索，找到最优参数。</li>
+<li>树模型的梯度提升法：在函数空间进行搜索，找到最优函数。所谓“提升”是指模型整体精度提升。</li>
+</ul>
+<p><img src="markdown-img-paste-20200626224416132.png" alt=""></p>
+<p><strong>GBDT 是基于梯度提升算法的，使用的决策树是 CART 回归树</strong>，无论处理回归问题还是二分类以及多分类，GBDT 都是使用 CART 回归树。为什么不用 CART 分类树呢？因为 GBDT 每次迭代要拟合的是梯度值，是连续值所以要用回归树。</p>
+<h2 id="GBDT-回归"><a href="#GBDT-回归" class="headerlink" title="GBDT 回归"></a>GBDT 回归</h2><p><strong>具体步骤</strong><br>输入： 训练集 <img src="markdown-img-paste-20200626224536707.png" alt=""><br>并且给定损失函数 $L(y, f(x))$<br>输出： 回归提升树 $f_{\kappa}(x)$</p>
+<p>1）初始化模型，得到使损失函数极小化的常数值（是一个只有根结点的树）</p>
+<p><img src="markdown-img-paste-20200626224734819.png" alt=""></p>
+<p>2）迭代训练 <em>K</em> 个模型 <em>k</em> = 1，2，⋯ ，<em>K</em><br>（a）计算负梯度：对于 <em>M</em> 个样本 <em>i</em> = 1，2，⋯ ，<em>M</em></p>
+<p><img src="markdown-img-paste-20200626224806797.png" alt=""></p>
+<p>（b）将求得的残差作为每个数据对应的新标签值，利用新数据集 $(x_{i}, r_{k,i})  , ,, , (i = 1,2,…,M)$ 训练第 <em>k</em> 棵回归树 ，其叶节点区域为 $R_{k,,j}  ,, , (j = 1,2,…,J)$， <em>J</em> 为该树的叶节点数。</p>
+<p>（c）通过极小化损失函数，计算不同叶节点区域 <em>j</em> = 1，2，…，<em>J</em> 对应的节点值</p>
+<p><img src="markdown-img-paste-20200626224916921.png" alt=""></p>
+<p>（d）更新模型</p>
+<p><img src="markdown-img-paste-20200626224922354.png" alt=""></p>
+<p>3）经过多次迭代后，得到最终的模型</p>
+<p><img src="markdown-img-paste-20200626224931570.png" alt=""></p>
+<h2 id="GBDT-分类"><a href="#GBDT-分类" class="headerlink" title="GBDT 分类"></a>GBDT 分类</h2><p>GBDT 的分类算法从思想上和 GBDT 回归算法没有区别，但是由于样本输出不是连续的值，而是离散的类别，导致我们无法拟合输出的误差。</p>
+<p><strong>解决方法主要有两个</strong>：</p>
+<p>1）用指数损失函数，此时 GBDT 退化为 AdaBoost 算法。</p>
+<p>2）用类对数损失函数（逻辑回归），即用的是类别的预测概率值和真实概率值的差来拟合损失。</p>
+<p>当使用对数损失函数时，有二分类和多分类的区别。</p>
+<h3 id="GBDT-二分类"><a href="#GBDT-二分类" class="headerlink" title="GBDT 二分类"></a>GBDT 二分类</h3><p>对于二元 GBDT，如果用类似逻辑回归的对数损失函数（此处 𝑦 ∈ {−1, +1}，而标准的逻辑回归中的对数损失的标签是 𝑦 ∈ {0, 1} ）</p>
+<p><img src="markdown-img-paste-20200626225518330.png" alt=""></p>
+<p>则对应的负梯度误差为</p>
+<p><img src="markdown-img-paste-2020062622554001.png" alt=""></p>
+<p>对于生成的决策树，我们各个叶子节点的最佳负梯度拟合值为</p>
+<p><img src="markdown-img-paste-20200626225549437.png" alt=""></p>
+<p>由于上式比较难优化，我们一般使用下式作为近似值</p>
+<p><img src="markdown-img-paste-20200626225556589.png" alt=""></p>
+<p>除了负梯度值不同以及叶节点的最佳负梯度拟合方式不同之外，其它都与 GBDT 回归算法相同。</p>
+<h3 id="GBDT-多分类"><a href="#GBDT-多分类" class="headerlink" title="GBDT 多分类"></a>GBDT 多分类</h3><p>这里直接截取了刘建平老师博客的公式<br><img src="markdown-img-paste-20200626225631629.png" alt=""></p>
+<h2 id="GBDT-常用损失函数"><a href="#GBDT-常用损失函数" class="headerlink" title="GBDT 常用损失函数"></a>GBDT 常用损失函数</h2><p><strong>分类问题</strong></p>
+<p>1）指数损失（负梯度推导见 AdaBoost）</p>
+<p><img src="markdown-img-paste-20200626225825800.png" alt="">：</p>
+<p>2）对数损失（负梯度推导见 GBDT 分类）：</p>
+<p><img src="markdown-img-paste-20200626225833930.png" alt=""></p>
+<p><strong>回归问题</strong></p>
+<p>1）平方损失：<br><img src="markdown-img-paste-20200626225916860.png" alt=""></p>
+<p>2）绝对损失：<br><img src="markdown-img-paste-20200626225925400.png" alt=""></p>
+<p>对应负梯度值为</p>
+<p><img src="markdown-img-paste-20200626225956350.png" alt=""></p>
+<p>3）Huber 损失：是均方差和绝对损失的折衷产物，对于远离中心的异常点，采用绝对损失，而中心附近的点采用均方差</p>
+<p><img src="markdown-img-paste-20200626230010931.png" alt=""></p>
+<p>对应负梯度为</p>
+<p><img src="markdown-img-paste-20200626230019424.png" alt=""></p>
+<p>4）分位数损失：对预测值高估和低估有不同比重的惩罚。(了解)</p>
+<p><img src="markdown-img-paste-20200626230107528.png" alt=""></p>
+<p>其中 𝜃 为分位数（超参），𝜃 越大，公式前半部分比重越大，表示对预测值低估的惩罚越大，反之对高估惩罚越大。下图中横坐标越正越高估，越负越低估。</p>
+<p><img src="markdown-img-paste-20200626230128149.png" alt=""></p>
+<p>对应的负梯度为</p>
+<p><img src="markdown-img-paste-20200626230142227.png" alt=""></p>
+<p>对于Huber损失和分位数损失，主要用于健壮回归，也就是减少异常点对损失函数的影响。</p>
+<h2 id="GBDT-正则化"><a href="#GBDT-正则化" class="headerlink" title="GBDT 正则化"></a>GBDT 正则化</h2><p>方法 1<br>和 Adaboost 类似的正则化，即步长（learning rate）。通过减少每棵树的学习输出值，削弱每棵树的影响，让后面的树有更大的学习空间，理论上是增加了树的个数，能够防止过拟合。</p>
+<p><img src="markdown-img-paste-20200626230228460.png" alt=""></p>
+<p>方法 2<br>通过子采样比例（Subsample），取值为 (0, 1] 。注意这里的子采样是不放回抽样。如果采样比例为1，则全部样本都使用，等于没有使用子采样。如果取值小于1，则只有一部分样本会去做 GBDT 的决策树拟合，这样可以减少模型的方差（数据扰动），即防止过拟合，但由于可能会增加模型的偏差，因此采样比例不能太低，推荐在 [0.5, 0.8] 之间。</p>
+<p>使用子采样的 GBDT 有时也称作 <strong>随机梯度提升树（Stochastic Gradient Boosting Tree，SGBT）</strong>。由于使用了子采样，程序可以通过采样分发到不同的任务去做 Boosting 的迭代过程，最后形成新树，使得 Boosting 可以并行学习。</p>
+<p>方法 3<br>对于基树模型即 CART 回归树进行正则化剪枝。</p>
+<p>方法 4<br>“Early Stopping”：Early Stopping 是机器学习迭代式训练模型中很常见的防止过拟合技巧，具体的做法是选择一部分样本作为验证集，在迭代拟合训练集的过程中，如果模型在验证集里错误率不再下降，就停止训练，也就是说控制迭代的轮数（树的个数）。在 sklearn 的 GBDT 中可以设置参数 <strong><em>n</em>iter_no_change_</strong> 实现 early stopping。</p>
+<h2 id="GBDT-总结"><a href="#GBDT-总结" class="headerlink" title="GBDT 总结"></a>GBDT 总结</h2><p><strong>优点</strong></p>
+<ul>
+<li>可以灵活处理各种类型的数据，包括连续值和离散值。</li>
+<li>在相对少的调参时间情况下，预测的准确率也可以比较高。这个是相对 SVM 来说的。</li>
+<li>使用一些健壮的损失函数，对异常值的鲁棒性非常强。比如 Huber 损失函数和 Quantile 损失函数。</li>
+</ul>
+<p><strong>缺点</strong><br>由于弱学习器之间存在依赖关系，难以并行训练数据。不过可以通过 SGBT 达到部分并行（针对单颗树特征处理和选择的并行（特征排序））。</p>
+<p>需要注意的是，在每次生成新的基模型中用到的损失函数是按照树模型自身的损失函数，比如构造 CART 分类树是基尼指数，CART 回归树是平方误差。而对于整个模型的优化方向是求前轮模型的负梯度。</p>
+<h1 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h1><p>(未完待续)</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>XGBoost<br><a href="https://www.cnblogs.com/pinard/p/10979808.html" target="_blank" rel="noopener">https://www.cnblogs.com/pinard/p/10979808.html</a><br><a href="https://zhuanlan.zhihu.com/p/92837676" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/92837676</a><br><a href="https://zhuanlan.zhihu.com/p/89215026" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/89215026</a><br><a href="https://ranmaosong.github.io/2019/04/27/ML-GBDT/" target="_blank" rel="noopener">https://ranmaosong.github.io/2019/04/27/ML-GBDT/</a></p>
+<p>GBDT<br><a href="https://www.cnblogs.com/pinard/p/6140514.html" target="_blank" rel="noopener">https://www.cnblogs.com/pinard/p/6140514.html</a><br><a href="http://www.52caml.com/head_first_ml/ml-chapter6-boosting-family/#Boosted_Decision_Tree" target="_blank" rel="noopener">http://www.52caml.com/head_first_ml/ml-chapter6-boosting-family/#Boosted_Decision_Tree</a></p>
+<p>偏、方差角度看集成学习<br><a href="https://zhuanlan.zhihu.com/p/27689464" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/27689464</a><br><a href="https://zhuanlan.zhihu.com/p/38853908" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/38853908</a></p>
+<p>集成学习<br><a href="https://www.cnblogs.com/liuwu265/p/4690486.html" target="_blank" rel="noopener">https://www.cnblogs.com/liuwu265/p/4690486.html</a><br><a href="http://imgtec.eetrend.com/d6-imgtec/blog/2018-09/17923.html" target="_blank" rel="noopener">http://imgtec.eetrend.com/d6-imgtec/blog/2018-09/17923.html</a><br><a href="https://blog.csdn.net/qq_36330643/article/details/77621232" target="_blank" rel="noopener">https://blog.csdn.net/qq_36330643/article/details/77621232</a><br><a href="https://medium.com/@pkqiang49/%E4%B8%80%E6%96%87%E7%9C%8B%E6%87%82%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0-%E8%AF%A6%E8%A7%A3-bagging-boosting-%E4%BB%A5%E5%8F%8A%E4%BB%96%E4%BB%AC%E7%9A%84-4-%E7%82%B9%E5%8C%BA%E5%88%AB-6e3c72df05b8" target="_blank" rel="noopener">https://medium.com/@pkqiang49/%E4%B8%80%E6%96%87%E7%9C%8B%E6%87%82%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0-%E8%AF%A6%E8%A7%A3-bagging-boosting-%E4%BB%A5%E5%8F%8A%E4%BB%96%E4%BB%AC%E7%9A%84-4-%E7%82%B9%E5%8C%BA%E5%88%AB-6e3c72df05b8</a></p>
+<p>随机森林特征选取/特征重要性<br><a href="https://www.jianshu.com/p/8985bc8e4a12" target="_blank" rel="noopener">https://www.jianshu.com/p/8985bc8e4a12</a><br><a href="https://pingao777.github.io/2017/11/18/%E7%96%8F%E8%80%8C%E4%B8%8D%E6%BC%8F%EF%BC%9A%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/" target="_blank" rel="noopener">https://pingao777.github.io/2017/11/18/%E7%96%8F%E8%80%8C%E4%B8%8D%E6%BC%8F%EF%BC%9A%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/</a><br><a href="http://freewill.top/2017/01/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97%EF%BC%885%EF%BC%89%EF%BC%9A%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/" target="_blank" rel="noopener">http://freewill.top/2017/01/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97%EF%BC%885%EF%BC%89%EF%BC%9A%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/</a></p>
+<p>AdaBoost<br><a href="https://www.cnblogs.com/pinard/p/6133937.html" target="_blank" rel="noopener">https://www.cnblogs.com/pinard/p/6133937.html</a><br><a href="https://www.cnblogs.com/liuwu265/p/4692347.html" target="_blank" rel="noopener">https://www.cnblogs.com/liuwu265/p/4692347.html</a><br><a href="https://blog.csdn.net/v_JULY_v/article/details/40718799" target="_blank" rel="noopener">https://blog.csdn.net/v_JULY_v/article/details/40718799</a><br><a href="https://zhuanlan.zhihu.com/p/73561785" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/73561785</a><br><a href="http://www.52caml.com/head_first_ml/ml-chapter6-boosting-family/" target="_blank" rel="noopener">http://www.52caml.com/head_first_ml/ml-chapter6-boosting-family/</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/26/post/DT/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -278,7 +670,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/06/26/post/DT/" itemprop="url">DT</a></h1>
+                <a class="post-title-link" href="/2020/06/26/post/DT/" itemprop="url">决策树（Decision Tree）</a></h1>
         
 
         <div class="post-meta">
@@ -1178,7 +1570,7 @@
               
 		<a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1200,7 +1592,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1250,7 +1642,7 @@
     	  <h3 class="widget-title">Tag Cloud</h3>
     	  <div id="myCanvasContainer" class="widget tagcloud">
             <canvas width="250" height="250" id="resCanvas" style="width:100%">
-              <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C4-5/" rel="tag">C4.5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CART/" rel="tag">CART</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DecisionTree/" rel="tag">DecisionTree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gini/" rel="tag">Gini</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ID3/" rel="tag">ID3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LDA/" rel="tag">LDA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCA/" rel="tag">PCA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVD/" rel="tag">SVD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/" rel="tag">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/" rel="tag">TCP/IP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UDP/" rel="tag">UDP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/entropy/" rel="tag">entropy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/" rel="tag">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a><span class="tag-list-count">1</span></li></ul>
+              <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Adaboost/" rel="tag">Adaboost</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bagging/" rel="tag">Bagging</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boosting/" rel="tag">Boosting</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BoostingTree/" rel="tag">BoostingTree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C4-5/" rel="tag">C4.5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CART/" rel="tag">CART</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DecisionTree/" rel="tag">DecisionTree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ensemble/" rel="tag">Ensemble</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GBDT/" rel="tag">GBDT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gini/" rel="tag">Gini</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ID3/" rel="tag">ID3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LDA/" rel="tag">LDA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCA/" rel="tag">PCA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RandomForest/" rel="tag">RandomForest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVD/" rel="tag">SVD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/" rel="tag">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/" rel="tag">TCP/IP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UDP/" rel="tag">UDP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XGBoost/" rel="tag">XGBoost</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/entropy/" rel="tag">entropy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/" rel="tag">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a><span class="tag-list-count">1</span></li></ul>
       	    </canvas>
     	  </div>
         </div>
