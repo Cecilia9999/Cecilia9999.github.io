@@ -198,7 +198,8 @@ SVD 分解对降维有什么好处呢？注意到 SVD 的奇异值矩阵中的�
 注：**左奇异矩阵可以用于行数的压缩** ；**右奇异矩阵可以用于列数即特征的压缩**，即 PCA 降维。　　
 
 
-**Reference**
+#### Reference
+
 https://www.cnblogs.com/pinard/p/6244265.html
 https://www.cnblogs.com/jerrylead/archive/2011/04/18/2020216.html
 https://www.cnblogs.com/guoyaohua/p/8855636.html
