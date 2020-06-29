@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="KNN 其实没有什么训练模型过程，它会直接对新数据进行分类。方法：计算新数据点和 dataset 中的所有点的距离，取前 k（KNN 算法参数）个最近的数据点并统计他们的 label，新数据点将归入统计出现最多次数的label。 以下几个细节请注意： 1. 关于 k 值选取  图中蓝色方块和黑色圆点是已有的两类数据点，红色五边形是新数据点。肉眼可看出该数据分类为蓝色方块比较合理。  假设 k">
+<meta name="description" content="KNN 其实没有什么训练模型过程，它会直接对新数据进行分类。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="近邻算法（KNN）">
 <meta property="og:url" content="http://yoursite.com/2020/06/29/post/KNN/index.html">
 <meta property="og:site_name" content="To be a developer">
-<meta property="og:description" content="KNN 其实没有什么训练模型过程，它会直接对新数据进行分类。方法：计算新数据点和 dataset 中的所有点的距离，取前 k（KNN 算法参数）个最近的数据点并统计他们的 label，新数据点将归入统计出现最多次数的label。 以下几个细节请注意： 1. 关于 k 值选取  图中蓝色方块和黑色圆点是已有的两类数据点，红色五边形是新数据点。肉眼可看出该数据分类为蓝色方块比较合理。  假设 k">
+<meta property="og:description" content="KNN 其实没有什么训练模型过程，它会直接对新数据进行分类。">
 <meta property="og:image" content="http://yoursite.com/2020/06/29/post/KNN/markdown-img-paste-20200629231759964.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/29/post/KNN/markdown-img-paste-20200629231817912.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/29/post/KNN/markdown-img-paste-20200629232430497.png">
 <meta property="article:published_time" content="2020-06-29T14:16:04.000Z">
-<meta property="article:modified_time" content="2020-06-29T14:27:30.000Z">
+<meta property="article:modified_time" content="2020-06-29T14:32:52.000Z">
 <meta property="article:author" content="Cecilia Song">
 <meta property="article:tag" content="KNN">
 <meta name="twitter:card" content="summary">
@@ -356,9 +356,11 @@
       
 
       
-        <a id="more"></a>
+        <p>KNN 其实没有什么训练模型过程，它会直接对新数据进行分类。</p>
+<a id="more"></a>
+
 <p><img src="markdown-img-paste-20200629231759964.png" alt=""></p>
-<p>KNN 其实没有什么训练模型过程，它会直接对新数据进行分类。方法：计算新数据点和 dataset 中的所有点的距离，取前 <em>k</em>（KNN 算法参数）个最近的数据点并统计他们的 label，新数据点将归入统计出现最多次数的label。 以下几个细节请注意：</p>
+<p>方法：计算新数据点和 dataset 中的所有点的距离，取前 <em>k</em>（KNN 算法参数）个最近的数据点并统计他们的 label，新数据点将归入统计出现最多次数的label。 以下几个细节请注意：</p>
 <p><strong>1. 关于 <em>k</em> 值选取</strong></p>
 <p><img src="markdown-img-paste-20200629231817912.png" alt=""></p>
 <p>图中蓝色方块和黑色圆点是已有的两类数据点，红色五边形是新数据点。肉眼可看出该数据分类为蓝色方块比较合理。</p>
