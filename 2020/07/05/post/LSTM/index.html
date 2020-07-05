@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="RNN,LSTM,GRU," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="RNN 受限于短期记忆问题。因为在反向传播过程中，RNN 中存在梯度消失问题（梯度消失问题是指随着时间推移，梯度在传播时会下降，如果梯度值变得非常小，则不会继续学习），因此 RNN 网络也不能太深。如果一个序列足够长，则很难把信息从较早的时间步传输到后面的时间步。比如尝试处理一段文本来进行预测，RNN 可能在开始时就会遗漏重要信息。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="长短期记忆（LSTM）和门控循环单元（GRU）">
+<meta property="og:url" content="http://yoursite.com/2020/07/05/post/LSTM/index.html">
+<meta property="og:site_name" content="To be a developer">
+<meta property="og:description" content="RNN 受限于短期记忆问题。因为在反向传播过程中，RNN 中存在梯度消失问题（梯度消失问题是指随着时间推移，梯度在传播时会下降，如果梯度值变得非常小，则不会继续学习），因此 RNN 网络也不能太深。如果一个序列足够长，则很难把信息从较早的时间步传输到后面的时间步。比如尝试处理一段文本来进行预测，RNN 可能在开始时就会遗漏重要信息。">
+<meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/1_AQ52bwW55GsJt6HTxPDuMA.gif">
+<meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/1_o-Cq5U8-tfa1_ve2Pf3nfg.gif">
+<meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/v2-2b1af1c81d7465b39cdf18c39de41d84_b.gif">
+<meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/v2-e1f53149d1f9631c1af50805dbb4e3dc_b.gif">
+<meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/markdown-img-paste-20200705144642781.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/1_GjehOa513_BgpDDP6Vkw2Q.gif">
+<meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/v2-1167da9a6386278cda018b3da01f006d_b.gif">
+<meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/1_S0rXIeO_VoUVOyrYHckUWg.gif">
+<meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/1_VOXRGhOShoWWks6ouoDN3Q.gif">
+<meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/1_p2yXhtxmYflEUrTC1rCoUA.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/1_jhi5uOm9PvZfmxvfaCektw.png">
+<meta property="article:published_time" content="2020-07-05T03:58:38.000Z">
+<meta property="article:modified_time" content="2020-07-05T07:30:53.000Z">
+<meta property="article:author" content="Cecilia Song">
+<meta property="article:tag" content="RNN">
+<meta property="article:tag" content="LSTM">
+<meta property="article:tag" content="GRU">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/07/05/post/LSTM/1_AQ52bwW55GsJt6HTxPDuMA.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/05/post/LSTM/"/>
+
+
+
+
+
+  <title>长短期记忆（LSTM）和门控循环单元（GRU） | To be a developer</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/Cecilia9999" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#70B7FD; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">To be a developer</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">A person who is worried about hair loss</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/05/post/LSTM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cecilia Song">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/selficon.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="To be a developer">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">长短期记忆（LSTM）和门控循环单元（GRU）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-05T12:58:38+09:00">
+                2020-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">machine learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>RNN 受限于短期记忆问题。因为在反向传播过程中，RNN 中存在梯度消失问题（梯度消失问题是指随着时间推移，梯度在传播时会下降，如果梯度值变得非常小，则不会继续学习），因此 RNN 网络也不能太深。如果一个序列足够长，则很难把信息从较早的时间步传输到后面的时间步。比如尝试处理一段文本来进行预测，RNN 可能在开始时就会遗漏重要信息。</p>
+<a id="more"></a>
+<p>比如 “I grew up in France… I speak fluent (French)” 要预测()中应该填哪个词时，跟很久之前的”France”有密切关系。</p>
+<p><strong>长短期记忆（Long Short-Term Memory，LSTM）</strong> 和 <strong>门控循环单元（Gated Recurrent Units，GRU）</strong> 是克服短期记忆问题提出的解决方案，它们引入称作“<strong>门（gate）</strong>”的内部机制，可以调节信息流。这些门结构可以学习序列中哪些数据是要保留的重要信息，哪些是要删除的。</p>
+<p>比方说，我们在网上购物时喜欢浏览客户评价，你会记住大家对它“是好是坏性价比高”等大致评价，而不会去记住完整的一段评价。LSTM 和 GRU 的作用就是忘记不相关的信息，只保留重要的信息。</p>
+<h1 id="RNN-的工作原理"><a href="#RNN-的工作原理" class="headerlink" title="RNN 的工作原理"></a>RNN 的工作原理</h1><p>先回顾下 RNN 流程：</p>
+<ul>
+<li>首先单词被转换成机器可读的向量</li>
+<li>然后 RNN 逐个处理向量序列</li>
+</ul>
+<p><img src="1_AQ52bwW55GsJt6HTxPDuMA.gif" alt=""></p>
+<p>在处理时，它把先前的隐藏状态传递给序列的下一步，其中隐藏状态作为神经网络记忆，它包含相关网络已处理数据的信息。</p>
+<p><img src="1_o-Cq5U8-tfa1_ve2Pf3nfg.gif" alt=""></p>
+<h2 id="RNN-中每个-cell-单元是如何计算隐藏状态"><a href="#RNN-中每个-cell-单元是如何计算隐藏状态" class="headerlink" title="RNN 中每个 cell 单元是如何计算隐藏状态"></a>RNN 中每个 cell 单元是如何计算隐藏状态</h2><p>首先，将输入和先前隐藏状态组合成一个向量，向量中含有当前输入和先前输入的信息。这个向量再经过激活函数 Tanh 后，输出新的隐藏状态，或网络记忆。</p>
+<p><img src="v2-2b1af1c81d7465b39cdf18c39de41d84_b.gif" alt=""></p>
+<h2 id="激活函数-Tanh"><a href="#激活函数-Tanh" class="headerlink" title="激活函数 Tanh"></a>激活函数 Tanh</h2><p>激活函数 Tanh 用于帮助调节流经网络的值，其输出值始终在区间 (-1, 1) 内。</p>
+<p><img src="v2-e1f53149d1f9631c1af50805dbb4e3dc_b.gif" alt=""></p>
+<p>以上就是 RNN 的主要构造，它的内部操作很少，使用的计算资源也少，但在适当情况下（如短序列分析）效果很好。</p>
+<h1 id="长短期记忆-LSTM"><a href="#长短期记忆-LSTM" class="headerlink" title="长短期记忆 LSTM"></a>长短期记忆 LSTM</h1><p>LSTM 的控制流程与 RNN 类似，它们都是在前向传播过程中处理传递信息的数据，区别在于 LSTM 单元的结构和运算有所变化。<br><strong>LSTM 的核心概念为其单元状态和各种门结构</strong>。</p>
+<p><strong>单元状态</strong> 相当于能传输相关信息的通路，让信息在序列链中传递下去，这部分可看作是网络的“记忆”。理论上，在序列处理过程中，单元状态能一直携带着相关信息。因此，在较早时间步中获得的信息也能传输到较后时间步的单元中，这样能减弱短期记忆的影响。</p>
+<p><strong>门结构</strong> 用于添加或移除信息，不同神经网络都可通过单元状态上的门结构来决定去记住或遗忘哪些相关信息。LSTM 单元中有三种调节信息流的门结构：<strong>遗忘门</strong>、<strong>输入门</strong> 和 <strong>输出门</strong>。</p>
+<p>下图是 LSTM 单元及其运算</p>
+<p><img src="markdown-img-paste-20200705144642781.png" alt=""></p>
+<p>图中的 3 个 sigmoid 函数代表 3 个门电路，上面一条主线是单元状态（cell state），前一时刻单元状态 c<sub>t-1</sub>进入，输出当前时刻单元状态 c<sub>t</sub>；下面一条线是隐藏状态（hidden state），前一时刻隐藏状态进入 h<sub>t-1</sub>，输出当前时刻隐藏状态 h<sub>t</sub>。</p>
+<h2 id="激活函数-Sigmoid"><a href="#激活函数-Sigmoid" class="headerlink" title="激活函数 Sigmoid"></a>激活函数 Sigmoid</h2><p>门结构中包含 Sigmoid 函数，它的输出区间是 (0, 1)，这有助于更新或忘记数据，<strong>因为任何数字乘以 0 都为 0，这部分信息会被遗忘</strong>。同样，任何数字乘以1都为相同值，这部分信息会完全保留。通过这样，网络能了解哪些数据不重要需要遗忘，哪些数字很重要需要保留。</p>
+<h2 id="遗忘门"><a href="#遗忘门" class="headerlink" title="遗忘门"></a>遗忘门</h2><p><strong>遗忘门能决定应丢弃或保留哪些信息</strong>。先前隐藏状态的信息和当前输入的信息同时进入 Sigmoid 函数，输出值处于 0 和 1 之间，<strong>越接近 0 意味着越应该忘记，越接近 1 意味着越应该保留</strong>。</p>
+<p><img src="1_GjehOa513_BgpDDP6Vkw2Q.gif" alt=""></p>
+<h2 id="输入门"><a href="#输入门" class="headerlink" title="输入门"></a>输入门</h2><p>输入门用来更新单元状态。将先前隐藏状态的信息和当前输入的信息输入到 Sigmoid 函数，在 0 和 1 之间调整输出值来决定更新哪些信息，<strong>0 表示不重要，1 表示重要</strong>。</p>
+<p>你也可将隐藏状态和当前输入传输给 Tanh 函数，并在 -1 和 1 之间压缩数值以调节网络，然后把 Tanh 输出和 Sigmoid 输出相乘，Sigmoid 输出将决定在 Tanh 输出中哪些信息是重要的且需要进行保留。</p>
+<p><img src="v2-1167da9a6386278cda018b3da01f006d_b.gif" alt=""></p>
+<h2 id="单元状态"><a href="#单元状态" class="headerlink" title="单元状态"></a>单元状态</h2><p>这里已经具备足够信息来计算单元状态。</p>
+<ul>
+<li>首先把先前的单元状态和遗忘向量逐点相乘，如果它乘以接近 0 的值，则意味在新的单元状态中可能要丢弃这些值</li>
+<li>然后把它和输入门的输出值逐点相加，把神经网络发现的新信息更新到单元状态中，这样就得到了新的单元状态。</li>
+</ul>
+<p><img src="1_S0rXIeO_VoUVOyrYHckUWg.gif" alt=""></p>
+<h2 id="输出门"><a href="#输出门" class="headerlink" title="输出门"></a>输出门</h2><p>输出门能决定下个隐藏状态的值，隐藏状态中包含了先前输入的相关信息。</p>
+<ul>
+<li>首先把先前的隐藏状态和当前输入传递给 Sigmoid 函数</li>
+<li>接着把新得到的单元状态传递给 Tanh 函数</li>
+<li>然后把 Tanh 输出和 Sigmoid 输出相乘，以确定隐藏状态应携带的信息</li>
+<li>最后把隐藏状态作为当前单元输出，把新的单元状态和新的隐藏状态传输给下个时间步。</li>
+</ul>
+<p><img src="1_VOXRGhOShoWWks6ouoDN3Q.gif" alt=""></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>遗忘门能决定需要保留先前状态中哪些相关信息，输入门决定在当前输入中哪些重要信息需要被添加，输出门决定了下一个隐藏状态。</p>
+<p>每个 LSTM 模块的步骤如下</p>
+<ol>
+<li>首先，我们连接了先前的隐藏状态和当前输入，这里定义为变量combine；</li>
+<li>把combine变量传递到遗忘层中，以删除不相关数据；</li>
+<li>再用combine变量创建一个候选层，用来保留可能要添加到单元状态中的值；</li>
+<li>变量combine也要传递给输出层，来决定应把候选层中的哪些数据添加到新的单元状态中；</li>
+<li>新的单元状态可根据遗忘层、候选层和输入层和先前的单元状态来计算得到；</li>
+<li>再计算当前单元输出；</li>
+<li>最后把输出和新的单元状态逐点相乘可得到新的隐藏状态。</li>
+</ol>
+<p>对于整个时间序列，循环重复上面 LSTM 模块即可</p>
+<p>LSTM 模块伪代码<br><img src="1_p2yXhtxmYflEUrTC1rCoUA.png" alt=""></p>
+<h1 id="门控循环单元-GRU"><a href="#门控循环单元-GRU" class="headerlink" title="门控循环单元 GRU"></a>门控循环单元 GRU</h1><p>GRU 是 RNN 的另一类演化变种，与 LSTM 非常相似。GRU 去除了单元状态，而使用隐藏状态来传输信息。它只有两个门结构，分别是<strong>更新门</strong>和<strong>重置门</strong>。</p>
+<p><img src="1_jhi5uOm9PvZfmxvfaCektw.png" alt=""></p>
+<h2 id="更新门"><a href="#更新门" class="headerlink" title="更新门"></a>更新门</h2><p>更新门的作用类似于 LSTM 中的遗忘门和输入门，它能决定要丢弃哪些信息和要添加哪些新信息。</p>
+<h2 id="重置门"><a href="#重置门" class="headerlink" title="重置门"></a>重置门</h2><p>重置门用于决定丢弃先前信息的程度。</p>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>这两部分组成了 GRU，它的张量操作较少，因此训练它比 LSTM 更快一点。在选择网络时很难判断哪个更好，研究人员通常会两个都试下，通过性能比较来选出更适合当前任务的结构。</p>
+<h4 id="References"><a href="#References" class="headerlink" title="References"></a>References</h4><p><a href="https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21" target="_blank" rel="noopener">https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Cecilia Song
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2020/07/05/post/LSTM/" title="长短期记忆（LSTM）和门控循环单元（GRU）">http://yoursite.com/2020/07/05/post/LSTM/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RNN/" rel="tag"># RNN</a>
+          
+            <a href="/tags/LSTM/" rel="tag"># LSTM</a>
+          
+            <a href="/tags/GRU/" rel="tag"># GRU</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/29/post/KNN/" rel="next" title="近邻算法（KNN）">
+                <i class="fa fa-chevron-left"></i> 近邻算法（KNN）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/07/05/post/RNN/" rel="prev" title="循环神经网络（RNN）">
+                循环神经网络（RNN） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+	    <a href='/'>
+              <img class="site-author-image" itemprop="image"
+                src="/images/selficon.png"
+                alt="Cecilia Song" />
+            </a>
+	    
+              <p class="site-author-name" itemprop="name">Cecilia Song</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+		<a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Cecilia9999" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yxsong924@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RNN-的工作原理"><span class="nav-number">1.</span> <span class="nav-text">RNN 的工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RNN-中每个-cell-单元是如何计算隐藏状态"><span class="nav-number">1.1.</span> <span class="nav-text">RNN 中每个 cell 单元是如何计算隐藏状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激活函数-Tanh"><span class="nav-number">1.2.</span> <span class="nav-text">激活函数 Tanh</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#长短期记忆-LSTM"><span class="nav-number">2.</span> <span class="nav-text">长短期记忆 LSTM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#激活函数-Sigmoid"><span class="nav-number">2.1.</span> <span class="nav-text">激活函数 Sigmoid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遗忘门"><span class="nav-number">2.2.</span> <span class="nav-text">遗忘门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入门"><span class="nav-number">2.3.</span> <span class="nav-text">输入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单元状态"><span class="nav-number">2.4.</span> <span class="nav-text">单元状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出门"><span class="nav-number">2.5.</span> <span class="nav-text">输出门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">2.5.1.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#门控循环单元-GRU"><span class="nav-number">3.</span> <span class="nav-text">门控循环单元 GRU</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#更新门"><span class="nav-number">3.1.</span> <span class="nav-text">更新门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重置门"><span class="nav-number">3.2.</span> <span class="nav-text">重置门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#References"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">References</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+      
+      
+        <script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+  	<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+  	<div class="widget-wrap">
+    	  <h3 class="widget-title">Tag Cloud</h3>
+    	  <div id="myCanvasContainer" class="widget tagcloud">
+            <canvas width="250" height="250" id="resCanvas" style="width:100%">
+              <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AUC/" rel="tag">AUC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Accuracy/" rel="tag">Accuracy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Adaboost/" rel="tag">Adaboost</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bagging/" rel="tag">Bagging</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boosting/" rel="tag">Boosting</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BoostingTree/" rel="tag">BoostingTree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C4-5/" rel="tag">C4.5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CART/" rel="tag">CART</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DecisionTree/" rel="tag">DecisionTree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ensemble/" rel="tag">Ensemble</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FPR/" rel="tag">FPR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GBDT/" rel="tag">GBDT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GRU/" rel="tag">GRU</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gini/" rel="tag">Gini</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ID3/" rel="tag">ID3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KNN/" rel="tag">KNN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LDA/" rel="tag">LDA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LSTM/" rel="tag">LSTM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PCA/" rel="tag">PCA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PR/" rel="tag">PR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Precision/" rel="tag">Precision</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RNN/" rel="tag">RNN</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ROC/" rel="tag">ROC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RandomForest/" rel="tag">RandomForest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Recall/" rel="tag">Recall</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVD/" rel="tag">SVD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/" rel="tag">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/" rel="tag">TCP/IP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TPR/" rel="tag">TPR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UDP/" rel="tag">UDP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XGBoost/" rel="tag">XGBoost</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/entropy/" rel="tag">entropy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/" rel="tag">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a><span class="tag-list-count">1</span></li></ul>
+      	    </canvas>
+    	  </div>
+        </div>
+      		
+    
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cecilia Song</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
