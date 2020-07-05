@@ -23,8 +23,8 @@ From GitHub Documentation:
 Choose a local site to download remote repository
 ``` bash
 # if not specify local path <dir>, download remote repo
-# with same name into current path  
-$ git clone <remote url> <dir>  
+# with same name into current path
+$ git clone <remote url> <dir>
 ```
 Then you can change in local repository. After edition, let's submit to remote repository. Enter into your local repository and track files
 ``` bash
@@ -32,12 +32,12 @@ $ git add <files>   # git add . :  add all files
 ```
 After add files, you can use ``` git status ``` to check tracking files. If correct, then commit and submit to remote repo
 ``` bash
-$ git commit -m "<comments>"   
+$ git commit -m "<comments>"
 
 # submit current branch local repo (origin) to remote branch
-$ git push <shortname> <local branch>:<remote branch>    
+$ git push <shortname> <local branch>:<remote branch>
 ```
-details of **git push** command see **_Push to remote repository_**  
+details of **git push** command see **_Push to remote repository_**
 
 Note that you can create new local branch by
 ``` bash
@@ -50,7 +50,7 @@ $ git checkout <branch>
 If you want to recall ``` git add <files> ```
 ``` bash
 # if not specify <files>, recall all files git add most recently
-$ git reset HEAD <files>  
+$ git reset HEAD <files>
 ```
 
 ## 2. Make a local repository and submit to remote
@@ -60,8 +60,8 @@ $ git init
 ```
 Then you will see ``` .git ``` exists and remember this file means it is a git repository. Track and commit project
 ``` bash
-$ git add <files>  
-$ git commit -m "<comments>"   
+$ git add <files>
+$ git commit -m "<comments>"
 ```
 Before you push to remote repository, don't forget to **map** local and remote repository,
 (actually use a shortname instead of writing a long url of remote everytime)
@@ -74,7 +74,8 @@ $ git remote add origin git@git://...
 ```
 Then you can submit local repository to your remote successfully
 ``` bash
-$ git push origin <remote branch>    
+$ git push origin <remote branch>   # if remote repo has files
+# "git push -u origin <remote branch>" if remote repo is new and none
 ```
 
 # Push to remote repository
@@ -149,7 +150,7 @@ $ git branch <new branch>  # not change HEAD reference
 3) Delete branch
 ``` bash
 $ git branch -d <branch>  # del a branch (already fully merged)
-$ git branch -D <branch>  # force to del a branch   
+$ git branch -D <branch>  # force to del a branch
 ```
 
 
@@ -163,7 +164,7 @@ $ git checkout <branch>
 
 2) Create new branch and switch to it
 ``` bash
-$ git checkout -b <new branch>           
+$ git checkout -b <new branch>
 $ git checkout -b <new branch> <branch>  # create new br based on br
 ```
 _Compare_: ```git checkout -b ``` will create new reference(new branch) for current commit and meanwhile update _HEAD_ to refer to this new branch; As for ``` git branch ```, it also creates a new branch which refers to new commit, but leaves HEAD detached (_HEAD_ not changes).
