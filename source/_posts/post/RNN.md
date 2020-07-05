@@ -79,5 +79,8 @@ $$\frac{\partial L}{\partial b}= \sum\limits_{t=1}^{\tau}diag(1-(h^{(t)})^2)\del
 
 $$\frac{\partial L}{\partial U} =\sum\limits_{t=1}^{\tau}diag(1-(h^{(t)})^2)\delta^{(t)}(x^{(t)})^T$$
 
-# 总结
+## 总结
 RNN 虽然理论上可以很漂亮的解决序列数据的训练，但它也有梯度消失时的问题。当序列很长的时候问题尤其严重。因此，上面的 RNN 模型一般不能直接用于应用领域。在语音识别，手写书别以及机器翻译等NLP 领域实际应用比较广泛的是基于 RNN 模型的一个特例 LSTM。
+
+#### Reference
+https://www.cnblogs.com/pinard/p/6509630.html#!comments
