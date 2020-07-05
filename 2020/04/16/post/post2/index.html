@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="To be a developer">
 <meta property="og:description" content="Almost everyday you may use git to manage your project. This article is for recording some commands I often use. All commands posted here are checked on web and are updated continuously. Let’s see it!">
 <meta property="article:published_time" content="2020-04-16T12:39:58.000Z">
-<meta property="article:modified_time" content="2020-04-17T07:27:11.000Z">
+<meta property="article:modified_time" content="2020-07-05T08:19:01.000Z">
 <meta property="article:author" content="Cecilia Song">
 <meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary">
@@ -365,12 +365,12 @@
 </ol>
 </blockquote>
 <h2 id="1-Git-clone-a-remote-repository-to-local"><a href="#1-Git-clone-a-remote-repository-to-local" class="headerlink" title="1. Git clone a remote repository to local"></a>1. Git clone a remote repository to local</h2><p>Choose a local site to download remote repository</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># if not specify local path &lt;dir&gt;, download remote repo</span></span><br><span class="line"><span class="comment"># with same name into current path  </span></span><br><span class="line">$ git <span class="built_in">clone</span> &lt;remote url&gt; &lt;dir&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># if not specify local path &lt;dir&gt;, download remote repo</span></span><br><span class="line"><span class="comment"># with same name into current path</span></span><br><span class="line">$ git <span class="built_in">clone</span> &lt;remote url&gt; &lt;dir&gt;</span><br></pre></td></tr></table></figure>
 <p>Then you can change in local repository. After edition, let’s submit to remote repository. Enter into your local repository and track files</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git add &lt;files&gt;   <span class="comment"># git add . :  add all files</span></span><br></pre></td></tr></table></figure>
 <p>After add files, you can use <code>git status</code> to check tracking files. If correct, then commit and submit to remote repo</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m <span class="string">"&lt;comments&gt;"</span>   </span><br><span class="line"></span><br><span class="line"><span class="comment"># submit current branch local repo (origin) to remote branch</span></span><br><span class="line">$ git push &lt;shortname&gt; &lt;<span class="built_in">local</span> branch&gt;:&lt;remote branch&gt;</span><br></pre></td></tr></table></figure>
-<p>details of <strong>git push</strong> command see <strong><em>Push to remote repository</em></strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m <span class="string">"&lt;comments&gt;"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># submit current branch local repo (origin) to remote branch</span></span><br><span class="line">$ git push &lt;shortname&gt; &lt;<span class="built_in">local</span> branch&gt;:&lt;remote branch&gt;</span><br></pre></td></tr></table></figure>
+<p>details of <strong>git push</strong> command see <strong><em>Push to remote repository</em></strong></p>
 <p>Note that you can create new local branch by</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b &lt;new branch&gt;</span><br></pre></td></tr></table></figure>
 <p>or change to an existed local branch by</p>
@@ -381,13 +381,13 @@
 <h2 id="2-Make-a-local-repository-and-submit-to-remote"><a href="#2-Make-a-local-repository-and-submit-to-remote" class="headerlink" title="2. Make a local repository and submit to remote"></a>2. Make a local repository and submit to remote</h2><p>Enter into your local project and initialize your project as a new repo by</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git init</span><br></pre></td></tr></table></figure>
 <p>Then you will see <code>.git</code> exists and remember this file means it is a git repository. Track and commit project</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git add &lt;files&gt;  </span><br><span class="line">$ git commit -m <span class="string">"&lt;comments&gt;"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git add &lt;files&gt;</span><br><span class="line">$ git commit -m <span class="string">"&lt;comments&gt;"</span></span><br></pre></td></tr></table></figure>
 <p>Before you push to remote repository, don’t forget to <strong>map</strong> local and remote repository,<br>(actually use a shortname instead of writing a long url of remote everytime)</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add &lt;shortname&gt; &lt;remote url&gt;</span><br></pre></td></tr></table></figure>
 <p>We often use <strong>origin</strong> as a default *<shortname>*</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add origin git@git://...</span><br></pre></td></tr></table></figure>
 <p>Then you can submit local repository to your remote successfully</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin &lt;remote branch&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin &lt;remote branch&gt;   <span class="comment"># if remote repo has files</span></span><br><span class="line"><span class="comment"># "git push -u origin &lt;remote branch&gt;" if remote repo is new and none</span></span><br></pre></td></tr></table></figure>
 
 <h1 id="Push-to-remote-repository"><a href="#Push-to-remote-repository" class="headerlink" title="Push to remote repository"></a>Push to remote repository</h1><p><strong>push</strong> : from local to remote</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push &lt;shortname&gt; &lt;<span class="built_in">local</span> branch&gt;:&lt;remote branch&gt;</span><br></pre></td></tr></table></figure>
@@ -434,7 +434,7 @@ which, actually, means <strong>delete</strong> the <em>&lt;remote branch&gt;</em
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout &lt;branch&gt;</span><br></pre></td></tr></table></figure>
 
 <p>2) Create new branch and switch to it</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b &lt;new branch&gt;           </span><br><span class="line">$ git checkout -b &lt;new branch&gt; &lt;branch&gt;  <span class="comment"># create new br based on br</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b &lt;new branch&gt;</span><br><span class="line">$ git checkout -b &lt;new branch&gt; &lt;branch&gt;  <span class="comment"># create new br based on br</span></span><br></pre></td></tr></table></figure>
 <p><em>Compare</em>: <code>git checkout -b</code> will create new reference(new branch) for current commit and meanwhile update <em>HEAD</em> to refer to this new branch; As for <code>git branch</code>, it also creates a new branch which refers to new commit, but leaves HEAD detached (<em>HEAD</em> not changes).</p>
 
       
