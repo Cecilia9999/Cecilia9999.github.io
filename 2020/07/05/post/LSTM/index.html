@@ -95,10 +95,9 @@
 <meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/1_S0rXIeO_VoUVOyrYHckUWg.gif">
 <meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/1_VOXRGhOShoWWks6ouoDN3Q.gif">
 <meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/markdown-img-paste-20200705191203988.png">
-<meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/1_jhi5uOm9PvZfmxvfaCektw.png">
-<meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/markdown-img-paste-20200705191248689.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/markdown-img-paste-20200705192456747.png">
 <meta property="article:published_time" content="2020-07-05T03:58:38.000Z">
-<meta property="article:modified_time" content="2020-07-05T10:13:26.000Z">
+<meta property="article:modified_time" content="2020-07-05T10:26:20.000Z">
 <meta property="article:author" content="Cecilia Song">
 <meta property="article:tag" content="RNN">
 <meta property="article:tag" content="LSTM">
@@ -411,7 +410,7 @@
 <li>最后把隐藏状态作为当前单元输出，把新的单元状态和新的隐藏状态传输给下个时间步。</li>
 </ul>
 <p><img src="1_VOXRGhOShoWWks6ouoDN3Q.gif" alt=""></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>遗忘门能决定需要保留先前状态中哪些相关信息，输入门决定在当前输入中哪些重要信息需要被添加，输出门决定了下一个隐藏状态。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>遗忘门能决定需要保留先前状态中哪些相关信息，输入门决定在当前输入中哪些重要信息需要被添加，输出门决定了下一个隐藏状态。</p>
 <p>每个 LSTM 模块的步骤如下</p>
 <ol>
 <li>首先，我们连接了先前的隐藏状态和当前输入，这里定义为变量combine；</li>
@@ -425,10 +424,10 @@
 <p>对于整个时间序列，循环重复上面 LSTM 模块即可</p>
 <p>LSTM 模块伪代码<br><img src="markdown-img-paste-20200705191203988.png" alt=""></p>
 <h1 id="门控循环单元-GRU"><a href="#门控循环单元-GRU" class="headerlink" title="门控循环单元 GRU"></a>门控循环单元 GRU</h1><p>GRU 是 RNN 的另一类演化变种，与 LSTM 非常相似。GRU 去除了单元状态，而使用隐藏状态来传输信息。它只有两个门结构，分别是<strong>更新门</strong>和<strong>重置门</strong>。</p>
-<p><img src="1_jhi5uOm9PvZfmxvfaCektw.png" alt=""><br><img src="markdown-img-paste-20200705191248689.png" alt=""></p>
+<p><img src="markdown-img-paste-20200705192456747.png" alt=""></p>
 <h2 id="更新门"><a href="#更新门" class="headerlink" title="更新门"></a>更新门</h2><p>更新门的作用类似于 LSTM 中的遗忘门和输入门，它能决定要丢弃哪些信息和要添加哪些新信息。</p>
 <h2 id="重置门"><a href="#重置门" class="headerlink" title="重置门"></a>重置门</h2><p>重置门用于决定丢弃先前信息的程度。</p>
-<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>这两部分组成了 GRU，它的张量操作较少，因此训练它比 LSTM 更快一点。在选择网络时很难判断哪个更好，研究人员通常会两个都试下，通过性能比较来选出更适合当前任务的结构。</p>
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><p>这两部分组成了 GRU，它的张量操作较少，因此训练它比 LSTM 更快一点。在选择网络时很难判断哪个更好，研究人员通常会两个都试下，通过性能比较来选出更适合当前任务的结构。</p>
 <h4 id="References"><a href="#References" class="headerlink" title="References"></a>References</h4><p><a href="https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21" target="_blank" rel="noopener">https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21</a></p>
 
       
@@ -648,7 +647,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RNN-的工作原理"><span class="nav-number">1.</span> <span class="nav-text">RNN 的工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RNN-中每个-cell-单元是如何计算隐藏状态"><span class="nav-number">1.1.</span> <span class="nav-text">RNN 中每个 cell 单元是如何计算隐藏状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激活函数-Tanh"><span class="nav-number">1.2.</span> <span class="nav-text">激活函数 Tanh</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#长短期记忆-LSTM"><span class="nav-number">2.</span> <span class="nav-text">长短期记忆 LSTM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#激活函数-Sigmoid"><span class="nav-number">2.1.</span> <span class="nav-text">激活函数 Sigmoid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遗忘门"><span class="nav-number">2.2.</span> <span class="nav-text">遗忘门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入门"><span class="nav-number">2.3.</span> <span class="nav-text">输入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单元状态"><span class="nav-number">2.4.</span> <span class="nav-text">单元状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出门"><span class="nav-number">2.5.</span> <span class="nav-text">输出门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">2.5.1.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#门控循环单元-GRU"><span class="nav-number">3.</span> <span class="nav-text">门控循环单元 GRU</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#更新门"><span class="nav-number">3.1.</span> <span class="nav-text">更新门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重置门"><span class="nav-number">3.2.</span> <span class="nav-text">重置门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#References"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">References</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RNN-的工作原理"><span class="nav-number">1.</span> <span class="nav-text">RNN 的工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RNN-中每个-cell-单元是如何计算隐藏状态"><span class="nav-number">1.1.</span> <span class="nav-text">RNN 中每个 cell 单元是如何计算隐藏状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激活函数-Tanh"><span class="nav-number">1.2.</span> <span class="nav-text">激活函数 Tanh</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#长短期记忆-LSTM"><span class="nav-number">2.</span> <span class="nav-text">长短期记忆 LSTM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#激活函数-Sigmoid"><span class="nav-number">2.1.</span> <span class="nav-text">激活函数 Sigmoid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遗忘门"><span class="nav-number">2.2.</span> <span class="nav-text">遗忘门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入门"><span class="nav-number">2.3.</span> <span class="nav-text">输入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单元状态"><span class="nav-number">2.4.</span> <span class="nav-text">单元状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出门"><span class="nav-number">2.5.</span> <span class="nav-text">输出门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.6.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#门控循环单元-GRU"><span class="nav-number">3.</span> <span class="nav-text">门控循环单元 GRU</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#更新门"><span class="nav-number">3.1.</span> <span class="nav-text">更新门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重置门"><span class="nav-number">3.2.</span> <span class="nav-text">重置门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-1"><span class="nav-number">3.3.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#References"><span class="nav-number">3.3.0.1.</span> <span class="nav-text">References</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
