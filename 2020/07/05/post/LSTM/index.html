@@ -91,13 +91,14 @@
 <meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/v2-e1f53149d1f9631c1af50805dbb4e3dc_b.gif">
 <meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/markdown-img-paste-20200705144642781.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/1_GjehOa513_BgpDDP6Vkw2Q.gif">
-<meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/v2-1167da9a6386278cda018b3da01f006d_b.gif">
+<meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/1_TTmYy7Sy8uUXxUXfzmoKbA.gif">
 <meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/1_S0rXIeO_VoUVOyrYHckUWg.gif">
 <meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/1_VOXRGhOShoWWks6ouoDN3Q.gif">
-<meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/1_p2yXhtxmYflEUrTC1rCoUA.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/markdown-img-paste-20200705191203988.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/1_jhi5uOm9PvZfmxvfaCektw.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/05/post/LSTM/markdown-img-paste-20200705191248689.png">
 <meta property="article:published_time" content="2020-07-05T03:58:38.000Z">
-<meta property="article:modified_time" content="2020-07-05T07:30:53.000Z">
+<meta property="article:modified_time" content="2020-07-05T10:13:26.000Z">
 <meta property="article:author" content="Cecilia Song">
 <meta property="article:tag" content="RNN">
 <meta property="article:tag" content="LSTM">
@@ -395,7 +396,7 @@
 <p><img src="1_GjehOa513_BgpDDP6Vkw2Q.gif" alt=""></p>
 <h2 id="输入门"><a href="#输入门" class="headerlink" title="输入门"></a>输入门</h2><p>输入门用来更新单元状态。将先前隐藏状态的信息和当前输入的信息输入到 Sigmoid 函数，在 0 和 1 之间调整输出值来决定更新哪些信息，<strong>0 表示不重要，1 表示重要</strong>。</p>
 <p>你也可将隐藏状态和当前输入传输给 Tanh 函数，并在 -1 和 1 之间压缩数值以调节网络，然后把 Tanh 输出和 Sigmoid 输出相乘，Sigmoid 输出将决定在 Tanh 输出中哪些信息是重要的且需要进行保留。</p>
-<p><img src="v2-1167da9a6386278cda018b3da01f006d_b.gif" alt=""></p>
+<p><img src="1_TTmYy7Sy8uUXxUXfzmoKbA.gif" alt=""></p>
 <h2 id="单元状态"><a href="#单元状态" class="headerlink" title="单元状态"></a>单元状态</h2><p>这里已经具备足够信息来计算单元状态。</p>
 <ul>
 <li>首先把先前的单元状态和遗忘向量逐点相乘，如果它乘以接近 0 的值，则意味在新的单元状态中可能要丢弃这些值</li>
@@ -422,9 +423,9 @@
 <li>最后把输出和新的单元状态逐点相乘可得到新的隐藏状态。</li>
 </ol>
 <p>对于整个时间序列，循环重复上面 LSTM 模块即可</p>
-<p>LSTM 模块伪代码<br><img src="1_p2yXhtxmYflEUrTC1rCoUA.png" alt=""></p>
+<p>LSTM 模块伪代码<br><img src="markdown-img-paste-20200705191203988.png" alt=""></p>
 <h1 id="门控循环单元-GRU"><a href="#门控循环单元-GRU" class="headerlink" title="门控循环单元 GRU"></a>门控循环单元 GRU</h1><p>GRU 是 RNN 的另一类演化变种，与 LSTM 非常相似。GRU 去除了单元状态，而使用隐藏状态来传输信息。它只有两个门结构，分别是<strong>更新门</strong>和<strong>重置门</strong>。</p>
-<p><img src="1_jhi5uOm9PvZfmxvfaCektw.png" alt=""></p>
+<p><img src="1_jhi5uOm9PvZfmxvfaCektw.png" alt=""><br><img src="markdown-img-paste-20200705191248689.png" alt=""></p>
 <h2 id="更新门"><a href="#更新门" class="headerlink" title="更新门"></a>更新门</h2><p>更新门的作用类似于 LSTM 中的遗忘门和输入门，它能决定要丢弃哪些信息和要添加哪些新信息。</p>
 <h2 id="重置门"><a href="#重置门" class="headerlink" title="重置门"></a>重置门</h2><p>重置门用于决定丢弃先前信息的程度。</p>
 <h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>这两部分组成了 GRU，它的张量操作较少，因此训练它比 LSTM 更快一点。在选择网络时很难判断哪个更好，研究人员通常会两个都试下，通过性能比较来选出更适合当前任务的结构。</p>
