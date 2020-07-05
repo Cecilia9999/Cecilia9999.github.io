@@ -69,7 +69,7 @@ LSTM 的控制流程与 RNN 类似，它们都是在前向传播过程中处理�
 
 你也可将隐藏状态和当前输入传输给 Tanh 函数，并在 -1 和 1 之间压缩数值以调节网络，然后把 Tanh 输出和 Sigmoid 输出相乘，Sigmoid 输出将决定在 Tanh 输出中哪些信息是重要的且需要进行保留。
 
-![](v2-1167da9a6386278cda018b3da01f006d_b.gif)
+![](1_TTmYy7Sy8uUXxUXfzmoKbA.gif)
 
 ## 单元状态
 这里已经具备足够信息来计算单元状态。
@@ -103,13 +103,14 @@ LSTM 的控制流程与 RNN 类似，它们都是在前向传播过程中处理�
 对于整个时间序列，循环重复上面 LSTM 模块即可
 
 LSTM 模块伪代码
-![](1_p2yXhtxmYflEUrTC1rCoUA.png)
+![](markdown-img-paste-20200705191203988.png)
 
 
 # 门控循环单元 GRU
 GRU 是 RNN 的另一类演化变种，与 LSTM 非常相似。GRU 去除了单元状态，而使用隐藏状态来传输信息。它只有两个门结构，分别是**更新门**和**重置门**。
 
 ![](1_jhi5uOm9PvZfmxvfaCektw.png)
+![](markdown-img-paste-20200705191248689.png)
 
 ## 更新门
 更新门的作用类似于 LSTM 中的遗忘门和输入门，它能决定要丢弃哪些信息和要添加哪些新信息。
